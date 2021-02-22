@@ -27,9 +27,9 @@
 ## 捐赠
 🏆如果对你有帮助，请作者吃根热狗🌭
 
-<img src="http://doc.hkxx.icu/images/pay.png" style="zoom:67%;" />
+<img src="http://doc.hkxx.icu/images/pay.png" width = "250" height = "250" />
 
 
 😜扫码添加作者微信
 
-![](images/weixin.jpg ':size=250x250')
+<img src="http://doc.hkxx.icu/images/weixin.png" width = "250" height = "250" />
