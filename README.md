@@ -32,4 +32,4 @@
 
 😜扫码添加作者微信
 
-<img src="http://doc.hkxx.icu/images/weixin.png" width = "250" height = "250" />
+<img src="http://doc.hkxx.icu/images/weixin.jpg" width = "250" height = "250" />
