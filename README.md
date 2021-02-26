@@ -13,6 +13,7 @@
 ## 笔记
 - [java知识点总结](notes/java知识点总结.md)
 - [Java常见面试题](notes/java常见面试题.md)
+- [SpringCloud学习笔记](notes/SpringCloud学习笔记.md)
 - [kubernates学习笔记](notes/kubernates学习笔记.md)
 - [elasticSearch学习笔记](notes/elasticSearch学习笔记.md)
 
