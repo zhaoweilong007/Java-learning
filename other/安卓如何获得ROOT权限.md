@@ -1,6 +1,6 @@
 # 如何刷机获得Root权限
-> 以下介绍小米手机获得root权限的办法，其他品牌同理
 
+> 以下介绍小米手机获得root权限的办法，其他品牌同理
 
 !> 注意，手机获得root权限有一定安全风险，可能导致手机变砖（无法开机），手机数据丢失，请在root前仔细备份手机数据
 
@@ -8,7 +8,7 @@
 
 ?> 目前刷机的方式有两种，一种是卡刷，一种是线刷
 
-需要了解的一些概念
+>**需要了解的一些概念**
 
 - **ROM**
 
@@ -56,15 +56,13 @@ Boot Loader 是在操作系统内核运行之前运行的一段小程序。通�
 
 `fastboot flash recovery  twrp.img`(这个替换成刚才下载的镜像名称)
 
-
 等待出现 **finished total time** 后表示刷入成功。
 
-
-## 刷入Mangisk
+## 刷入Magisk
 
 >Magisk是一套开放源代码的Android（4.2及以上版本）自定义工具套组，内置了Magisk Manager（图形化管理界面）、Root、启动脚本、SElinux补丁和启动时认证/dm-verity/强制加密移除功能。Magisk同时提供了在无需修改系统文件的情况下更改/system或/vendor分区内容的接口，利用与Xposed类似的模块系统，开发者可以对系统进行修改或对所安装的软件功能进行修改等。
-
->除此之外，Magisk可以对其他验证系统完整性的应用程序进行隐藏（称为Magisk Hide），使得用户可在获取Root权限的情况下使用如向导宝可梦GO[1]、Fate/Grand Order[2]一类的应用程序或开启支付宝、微信的指纹支付功能[3]
+>
+>除此之外，Magisk可以对其他验证系统完整性的应用程序进行隐藏（称为Magisk Hide），使得用户可在获取Root权限的情况下使用如向导宝可梦GO、Fate/Grand Order一类的应用程序或开启支付宝、微信的指纹支付功能
 
 前面已经成功刷入第三方的rec了，借助第三方的rec，我们就可以卡刷了，然后开始刷入magisk，首先到GitHub下载最新版本的[magisk](https://github.com/topjohnwu/Magisk),并下载安装[magisk manager](https://github.com/topjohnwu/MagiskManager)，自己记下magisk文件下载的位置
 
@@ -74,8 +72,9 @@ Boot Loader 是在操作系统内核运行之前运行的一段小程序。通�
 可以在magisk manager在线安装第三方的框架，像Riru Xposed 这鞋强大的框架
 
 ## 安装太极
-> 太极是一个能够运行 Xposed 模块的框架，模块能通过它改变系统和应用的行为。太极既能以传统的 Root/刷机方式运作，也能免 Root/ 免刷机运行；并且它支持 Android 5.0 ~ 11。
 
+> 太极是一个能够运行 Xposed 模块的框架，模块能通过它改变系统和应用的行为。太极既能以传统的 Root/刷机方式运作，也能免 Root/ 免刷机运行；并且它支持 Android 5.0 ~ 11。
+>
 >简单来说，太极就是一个 类 Xposed框架，它能够加载 Xposed 模块、修改系统和 APP、拦截方法，执行 hook 逻辑等
 
 ![taichi](../images/taichi.png)
@@ -91,6 +90,6 @@ Boot Loader 是在操作系统内核运行之前运行的一段小程序。通�
 
 ![taichi](../images/taichi-module.png)
 
-
 ## 结语
+
 剩下的就靠你自己探索了，更多的可玩性，比如还可以安装Riru Xposed框架等，有了root权限，可以完全控制自己的手机，app广告不存在的，微信登陆确认不存在的，垃圾app频繁自启动不存在的，微信消息撤回、微信内置浏览器等等，功能非常强大，剩下的就交给你们自己了
