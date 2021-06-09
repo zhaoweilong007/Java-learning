@@ -663,6 +663,8 @@ AOP：面向切面编程，能够将那些业务无关，却为业务所公用�
 
 ##### **spring事务隔离级别**
 
+spring定义一个常量`Isolation`
+
 TransactionDefinition 接口中定义了五个表示隔离级别的常量：
 
 1、default，使用数据库默认隔离级别，mysql是repretable_read，oracle采用read_commit
@@ -675,8 +677,74 @@ TransactionDefinition 接口中定义了五个表示隔离级别的常量：
 
 5、串行化
 
-#### spring事务的传播行为？
+#### spring事务传播行为
 
+##### 编程式事务
+
+使用`transactionTemplate`或者`transactionManager`进行处理
+
+- PlatformTransactionManager 事务管理器
+
+
+- TransactionDefiniton 事务属性
+
+传播行为、隔离级别、回滚规则、超时时间、是否只读
+
+- TransactionStatus 事务状态
+
+
+##### 声明式事务
+
+使用@Transacational注解进行处理，使用aop实现，AOP使用动态代理，如果目标对象实现了接口，使用JDK动态代理，否则使用CGLIB代理
+>作用public方法、类（所有public方法）、接口（不推荐），只捕获RuntimeException和Error，check异常不捕获
+
+**参数说明**
+| 属性名      | 说明                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| propagation | 事务的传播行为，默认值为 REQUIRED，可选的值在上面介绍过                                      |
+| isolation   | 事务的隔离级别，默认值采用 DEFAULT，可选的值在上面介绍过                                     |
+| timeout     | 事务的超时时间，默认值为-1（不会超时）。如果超过该时间限制但事务还没有完成，则自动回滚事务。 |
+| readOnly    | 指定事务是否为只读事务，默认值为 false。                                                     |
+| rollbackFor | 用于指定能够触发事务回滚的异常类型，并且可以指定多个异常类型                                 |
+
+**七种事务传播行为**
+
+- Propagation.REQUIRED
+
+默认事务传播行为
+
+1、如果外部没有开启事务，则开启一个新的事务
+
+2、如果外部开启了事务，则加入这个事务
+
+- Propagation.REQUIRED_NEW
+
+创建一个新的事务，如果存在事务，就将事务挂起，也就是无论怎么样都会开启一个新的事务，开启的事务相互独立，互不干扰
+
+- Propagation.NESTED
+
+如果存在事务，则创建一个嵌套事务来运行，外部事务回滚时子事务也会回滚，而子事务回滚不影响主事务和其他子事务
+
+如果不存在事务，则以Propagation.REQUIRED的方式运行，开启一个独立的事务
+
+
+- Propagation.MANDATORY
+
+如果存在事务，则加入事务
+
+如果没有事务，则爆出异常
+
+- Propagation.SUPPORTS
+  
+如果存在事务，则加入事务，不存在事务，则以非事务的方式运行
+
+- Propagation.NOT_SUPPROT
+
+以非事务的方式运行，如果存在事务，将事务挂起
+
+- Propagation.NEVER
+
+以非事务的方式运行，如果存在事务，则抛出异常
 
 #### springboot是怎么实现自动装配的？
 @SpringBootApplication注是一个复合注解，包含
