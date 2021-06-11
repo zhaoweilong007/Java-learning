@@ -32,8 +32,6 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## 多线程
 
-### 如何合理配置线程池大小？
-
 ### ThreadLocal、volatile的实现原理和使用场景？
 
 ThreadLocal是一个线程副本变量，存储了每个线程的变量副本，线程与线程之间独立互不影响
@@ -46,13 +44,11 @@ volatile是jvm的一个关键字，volatile主要有两个作用，一是保证�
 
 当线程一直没有销毁，而使用完没有手动清除ThreadLocal的强引用时，key和value不断增加，最终导致OOM
 
-
-### 常见的JVM调优？可以具体到哪个参数？
-
 ### 什么是双亲委派模型？有什么好处？什么情况下需要破坏双亲委派模型？
 
-到类加载器收到一个类加载请求时，他并不是自己加载，而是交由他的父类加载器加载，依次递归，直到顶层类加载加载，顶层类能加载则直接返回，否则依次由其子类加载，
+当类加载器收到一个类加载请求时，他并不是自己加载，而是交由他的父类加载器加载，依次递归，直到顶层类加载加载，顶层类能加载则直接返回，否则依次由其子类加载，
 好处：避免类的重复加载，防止Java核心API被修改
+
 
 ---
 
@@ -60,18 +56,37 @@ volatile是jvm的一个关键字，volatile主要有两个作用，一是保证�
 
 ### GC分哪两种？minor Gc和full Gc有什么区别？什么时候触发full Gc？分别采用什么算法？
 
-minor Gc：对新生代进行回收
+minor Gc：对新生代进行回收，一般也叫YGC
 
 full Gc：对整个堆进行回收
 
 垃圾回收算法：
-
 - 标记清除
 - 复制
 - 标记整理
 - 分代收集
 
+
+新生代使用复制算法、标记清除，老年代使用标记整理、分代收集
+
 gc堆分为新生代和老年代，当然每种收集器也不一样，像G1、ZGC这种新型的就是将堆划分为region区域，并没有新生代，老年代的固定区域的划分
+
+**对象在jvm怎么分配的**
+
+- 判断能否在栈上分配
+- 判断是否是大对象，大对象直接分配在来老年代
+- 判断是否可以在TLAB分配，TLAB是线程本地分配缓存，占用的是eden的空间
+
+**触发minor gc和full gc的条件**
+
+- minor gc 当eden区满时，触发minor gc
+- full gc
+  - 调用system.gc()时
+  - 老年代空间不足时
+  - 方法区空间不足
+  - 通过minor gc进入老年代的平均大小大于老年代的可用内存
+  - 由eden区、from Survivor向to Survivor区复制时，对象大小大于to Survivor大小，则把对象转到老年代，当对象大小大于老年代可用空间，触发full gc
+
 
 ### JVM有几种classload？为什么有这么多？
 
@@ -84,18 +99,6 @@ gc堆分为新生代和老年代，当然每种收集器也不一样，像G1、Z
 
 ## Spring
 
-
-### Spring有哪些优势？
-
-重要有两个特性，Ioc和AOP
-
-### Springboot相对于spring有哪些改进？spring5比spring4做了那些改进？
-
-springboot实现了spring的自动配置，约定大于配置，相当与spring的一个脚手架
-
-spring5特性：
-
-
 ### SpringBoot的自动装配原理？
 
 注解SpringBootApplication实际上是一个复合注解
@@ -104,7 +107,13 @@ spring5特性：
 
 @AuotConfiguration注解会自动扫描MATE-INF下spring.factories文件，每个文件有个AutoConfig的配置类，通过加载这些自动类从而实现了spring的自动装配，@AutoCompontScan注解自动扫描包下面的组件注入到spring
 
-### SpringApplication注解原理？
+### Spring Bean的生命周期
+
+
+### Spring Bean的作用域
+
+
+
 
 ## 消息队列
 
@@ -120,20 +129,19 @@ spring5特性：
 
 ## Redis
 
+### Redis的数据类型及对应的数据结构
+
 ### Redis为什么这么快？Redis采用多线程会有那些问题？
 
 redis时基于内存的操作，存储结构简单，key-value形式
 
 多线程可能会有并发问题
 
-### Redis的锁的原子性操作？Redis内部是如何实现的？
+
 
 ---
 
-## SpringCloud
-
-### Spring Cloud和Dubbo下？什么场景下适合用Spring Cloud的？
-
+## 分布式
 
 ### 分布式事务的理解？二阶段提交？三阶段提交？
 

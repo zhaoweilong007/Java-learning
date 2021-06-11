@@ -2,8 +2,8 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Spring Cloud学习笔记](#spring-cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)
-  - [微服务架构](#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84)
+- [Spring Cloud学习笔记](#spring-cloud学习笔记)
+  - [微服务架构](#微服务架构)
   - [RPC](#rpc)
   - [Spring Cloud](#spring-cloud)
     - [eureka](#eureka)
@@ -12,18 +12,18 @@
     - [feign](#feign)
     - [Hystrix](#hystrix)
     - [sentinel](#sentinel)
-    - [网关服务](#%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1)
-      - [zuul网关](#zuul%E7%BD%91%E5%85%B3)
-      - [Spring Cloud Gateway网关](#spring-cloud-gateway%E7%BD%91%E5%85%B3)
-    - [链路追踪](#%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA)
+    - [网关服务](#网关服务)
+      - [zuul网关](#zuul网关)
+      - [Spring Cloud Gateway网关](#spring-cloud-gateway网关)
+    - [链路追踪](#链路追踪)
     - [spring cloud stream](#spring-cloud-stream)
     - [config](#config)
-  - [分布式事务](#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1)
-    - [CAP原理](#cap%E5%8E%9F%E7%90%86)
-    - [BASE原理](#base%E5%8E%9F%E7%90%86)
-    - [2pc提交](#2pc%E6%8F%90%E4%BA%A4)
-    - [3pc提交](#3pc%E6%8F%90%E4%BA%A4)
-    - [Paxos算法](#paxos%E7%AE%97%E6%B3%95)
+  - [分布式事务](#分布式事务)
+    - [CAP原理](#cap原理)
+    - [BASE原理](#base原理)
+    - [2pc提交](#2pc提交)
+    - [3pc提交](#3pc提交)
+    - [Paxos算法](#paxos算法)
   - [Zookeeper](#zookeeper)
   - [Dubbo](#dubbo)
 
@@ -200,8 +200,16 @@ follower
 - 分区容错性
 分布式系统在遇到任何网络分区故障的时候，仍需要保证对外提供一致性和可用性，除非整个网络发生故障
 
+**网络分区**
+在分布系统中，可能由于故障导致节点之间无法连通，整个网络分成了几块区域
+
+想zookeeper采用的CP架构，eureka是AP架构，Nacos支持CP、AP架构
 
 ### BASE原理
+>在cap理论上权衡的一种结果，即使做不到强一致性，但是可以做到最终一致性
+- 基本可用
+- 软状态
+- 最终一致性
 
 ### 2pc提交
 - 阶段一 提交事务请求

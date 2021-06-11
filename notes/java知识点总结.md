@@ -388,15 +388,15 @@ ReentranLock和synchronization都是非公平锁，ReentrantLock可以设置为�
 #### JUC
 >JUC是java.util.concurrent工具包的简称，这是一个处理线程的工具类
 
-
-#### Semaphore（信号量）
-允许多个线程同时访问
-
-
 #### CountDownLatch（倒计时器）
 >CountDownLatch允许count个线程阻塞在一个地方，直至所有的线程执行完毕
 
 CountDownLatch是共享锁的一种实现,它默认构造 AQS 的 state 值为 count。当线程使用countDown方法时,其实使用了tryReleaseShared方法以CAS的操作来减少state,直至state为0就代表所有的线程都调用了countDown方法。当调用await方法的时候，如果state不为0，就代表仍然有线程没有调用countDown方法，那么就把已经调用过countDown的线程都放入阻塞队列Park,并自旋CAS判断state == 0，直至最后一个线程调用了countDown，使得state == 0，于是阻塞的线程便判断成功，全部往下执行
+
+允许多个线程阻塞在一个地方，直到所有线程全部执行完成
+
+#### Semaphore（信号量）
+允许指定数量线程同时访问某个资源，必须获取许可才可继续执行，否者等待获得许可
 
 #### CyclicBarrier（循环栅栏）
 >CountDownLatch的实现是基于AQS的，而CycliBarrier是基于 ReentrantLock(ReentrantLock也属于AQS同步器)和 Condition 的.
@@ -414,9 +414,15 @@ threadlocal有一个静态内部类ThreadLocalMap,存放了每个线程的变量
 弱引用一定程度上回收了无用对象，但前提是手动清理掉对象的强引用，只要线程一直不死，ThreadLocalMap的key-value会一直增加
 
 
+#### JMM（java内存模型）
+
+java分为主内存和工作内存，当一个线程读取一个值的时候，先从主内存拷贝到工作内存，修改的时候修改的是工作内存的值，修改完了最写入主内存，
+这就是会导致并发情况下同时修改一个值会出现数据不一致，比如i++,实际上有两部操作，先读取i的值，再+1,如果a线程读取的值为1，这是b线程读取的值也为1，这时a先写入i=2,因为b的i还是1，如果b写入的结果还是2
+
+
 ## JVM
 
-#### JVM内存模型？
+#### JVM
 
 - jdk1.8之后
 
