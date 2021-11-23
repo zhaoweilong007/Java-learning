@@ -1,7 +1,9 @@
 # 最好看的shell-zsh
+
 > 常见的shell如bash、fish、sh、csh、ksh，但是都没有zsh这么好看
 
 查看支持的shell
+
 ~~~shell
 cat /etc/shells
 ~~~
@@ -23,6 +25,7 @@ chsh -s /bin/zsh
 ~~~
 
 ## 安装oh my zsh
+
 [github](https://github.com/ohmyzsh/ohmyzsh) [官网](https://ohmyz.sh/#install)
 
 - 使用curl和wget命令安装
@@ -30,7 +33,9 @@ chsh -s /bin/zsh
 ~~~shell
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ~~~
+
 或者
+
 ~~~shell
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 ~~~
@@ -38,6 +43,7 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 - 使用git
 
 克隆仓库
+
 ~~~shell
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
@@ -50,11 +56,14 @@ zsh的配置文件在~/.zshrc中
 接下来可以自定义主题插件，主题插件的位置在~/.oh-my-zsh文件夹的thems和plugins中
 
 - **主题**
-使用vim打开zshrc的文件
+  使用vim打开zshrc的文件
+
 ~~~shell
 vim ~/.zshrc
 ~~~
+
 找到这一行，修改主题配置，可以修改自己喜欢的主题，随机主题使用"random"
+
 ~~~
 ZSH_THEME=”robbyrussell”
 ~~~
@@ -64,47 +73,57 @@ ZSH_THEME=”robbyrussell”
 可以查看下官网文档说明这里就不一一展示了[插件说明](https://github.com/ohmyzsh/ohmyzsh/wiki/Settings#plugins)
 
 - git
->这个是装好oh-my-zsh就默认已经开启的
->查看所有的git命令alias
+
+> 这个是装好oh-my-zsh就默认已经开启的
+> 查看所有的git命令alias
 
 ~/.oh-my-zsh/plugins/git/git.plugin.zsh
 
 - z
->这个是oh-my-zsh默认就装好的，需要自己开启。还有一个autojump的插件和z功能差不多，autojump需要单独装，
->如果z插件历史记录太多，并且有一些不是自己想要的，可以删除
+
+> 这个是oh-my-zsh默认就装好的，需要自己开启。还有一个autojump的插件和z功能差不多，autojump需要单独装，
+> 如果z插件历史记录太多，并且有一些不是自己想要的，可以删除
 
 z -x 不要的路径
 
 - sublime
 
->又是一个自带的插件，同样需要自己开启，针对喜欢用sublime的小伙伴
->如果想要用sublime打开一个文件
+> 又是一个自带的插件，同样需要自己开启，针对喜欢用sublime的小伙伴
+> 如果想要用sublime打开一个文件
 
 st 文件路径
-- vscode
->官网，随着Visual Studio Code越来越火，用的人也越来越多，可以装一下这个插件
 
- 打开一个文件
+- vscode
+
+> 官网，随着Visual Studio Code越来越火，用的人也越来越多，可以装一下这个插件
+
+打开一个文件
 
 vs 文件路径
+
 ~~~shell
 git clone https://github.com/valentinocossar/vscode.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/vscode
 ~~~
 
 - zsh-autosuggestions
->官网，非常好用的一个插件，会记录你之前输入过的所有命令，并且自动匹配你可能想要输入命令，然后按→补全
+
+> 官网，非常好用的一个插件，会记录你之前输入过的所有命令，并且自动匹配你可能想要输入命令，然后按→补全
 
 ~~~shell
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ~~~
+
 - zsh-syntax-highlighting
->官网，命令太多，有时候记不住，等输入完了才知道命令输错了，这个插件直接在输入过程中就会提示你，当前命令是否正确，错误红色，正确绿色
+
+> 官网，命令太多，有时候记不住，等输入完了才知道命令输错了，这个插件直接在输入过程中就会提示你，当前命令是否正确，错误红色，正确绿色
 
 ~~~shell
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ~~~
+
 - sudo
->偶尔输入某个命令，提示没有权限，需要加sudo，这个时候按两下ESC，就会在命令行头部加上sudo
+
+> 偶尔输入某个命令，提示没有权限，需要加sudo，这个时候按两下ESC，就会在命令行头部加上sudo
 
 ## 安装Terminal
 
@@ -112,8 +131,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 ![windows terminal](../images/zsh2.png)
 
-在软件商店搜索 window terminal下载即可
-window terminal支持自定义配置，包括背景图、字体、主题、透明度等等，具体可以看下官网说明
+在软件商店搜索 window terminal下载即可 window terminal支持自定义配置，包括背景图、字体、主题、透明度等等，具体可以看下官网说明
 
 下面是我的配置，供参考
 
@@ -259,7 +277,8 @@ window terminal支持自定义配置，包括背景图、字体、主题、透�
 ~~~
 
 - fluent terminal
->基于UWP和Web技术的终端仿真器
+
+> 基于UWP和Web技术的终端仿真器
 
 ![fluent terminal](../images/fluent.png)
 

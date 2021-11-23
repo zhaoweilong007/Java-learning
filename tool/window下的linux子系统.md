@@ -6,8 +6,6 @@
 
 以上是维基百科的描述，下面教你如何使用wsl
 
-
-
 - 准备工作
 
   打开控制面板-程序-启用或关闭windows功能
@@ -20,13 +18,13 @@
 
 - 2 下载安装
 
-  - 在microsoft store商店里找到ubuntu下载，最后打开就可以用了
+    - 在microsoft store商店里找到ubuntu下载，最后打开就可以用了
 
-    <img src="../images/image-20210323094829466.png" alt="image-20210323094829466" style="zoom: 50%;" />
+      <img src="../images/image-20210323094829466.png" alt="image-20210323094829466" style="zoom: 50%;" />
 
 - 3 更新wsl
 
-  -  版本要求
+    - 版本要求
 
   > 对于x64系统：**版本1903**或更高版本，以及**内部版本18362**或更高版本。
   >
@@ -34,38 +32,38 @@
   >
   > 低于18362的内部版本不支持WSL2。使用[Windows Update Assistant](https://www.microsoft.com/software-download/windows10)来更新Windows版本。
 
-  - 以管理员的身份打开PowerShell，运行以下命令启动虚拟机功能
+    - 以管理员的身份打开PowerShell，运行以下命令启动虚拟机功能
 
-    ~~~powershell
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-    ~~~
+      ~~~powershell
+      dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+      ~~~
 
-    
 
-  - 下载linux内核更新程序包
+- 下载linux内核更新程序包
 
-    > [用于x64机器的WSL2 Linux内核更新程序包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
+  > [用于x64机器的WSL2 Linux内核更新程序包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
-    下载完成后运行
+  下载完成后运行
 
-  - 最后运行PowerShell命令
+- 最后运行PowerShell命令
 
-    ~~~powershell
-    wsl --set-default-version 2
-    ~~~
+  ~~~powershell
+  wsl --set-default-version 2
+  ~~~
 
-    将发行版本设置为WSL 1或WSL 2
+  将发行版本设置为WSL 1或WSL 2
 
-    ~~~powershell
-    wsl --set-version <distribution name> <versionNumber>
-    ~~~
+  ~~~powershell
+  wsl --set-version <distribution name> <versionNumber>
+  ~~~
 
-    确保`<distribution name>`用发行版的实际名称和`<versionNumber>`数字“ 1”或“ 2”代替。您可以随时通过运行与上述相同的命令将其替换为WSL 1，但将'2'替换为'1'。
+  确保`<distribution name>`用发行版的实际名称和`<versionNumber>`数字“ 1”或“ 2”代替。您可以随时通过运行与上述相同的命令将其替换为WSL 1，但将'2'
+  替换为'1'。
 
-    如：
+  如：
 
-    ~~~powershell
-    wsl --set-version Ubuntu 2
-    ~~~
+  ~~~powershell
+  wsl --set-version Ubuntu 2
+  ~~~
 
-  参考链接 [适用于Windows的Windows子系统Windows 10安装指南](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+参考链接 [适用于Windows的Windows子系统Windows 10安装指南](https://docs.microsoft.com/en-us/windows/wsl/install-win10)

@@ -1,4 +1,5 @@
 # 使用harbor搭建docker私有仓库
+
 > 一般公司都有自己docker私有仓库，而harbor就是其中之一，下面教你使用harbor搭建私有的docker仓库
 
 ## 环境准备
@@ -8,6 +9,7 @@
 - Openssl : Latest is preferred
 
 ## 安装
+
 harbor可以在线安装和离线安装，不过方法都一样
 
 - [下载harbor安装包](https://github.com/goharbor/harbor/releases) 在线或者离线都可以
@@ -23,6 +25,7 @@ curl -LJO https://github.com/goharbor/harbor/releases/download/v2.2.1/harbor-onl
 ~~~shell
 tar xvf harbor-online-installer-version.tgz
 ~~~
+
 或者
 
 ~~~shell
@@ -33,11 +36,9 @@ tar xvf harbor-offline-installer-version.tgz
 
 ![harbor](../images/harbor.png)
 
-
 - 修改配置文件，修改域名、端口、https证书配置、默认密码等
 
 ![harbor-yml](../images/harbor-yml.png)
-
 
 - 以管理员的身份执行install.sh
 
@@ -57,7 +58,6 @@ sudo ./install.sh
 
 ![harbor-home](../images/harbor-home2.png)
 
-
 ## 开始上传镜像到harbor
 
 !> 如果你使用的是http协议，那需要在docker的配置文件中增加所信任的http地址
@@ -65,8 +65,7 @@ sudo ./install.sh
 在`"insecure-registries"`属性中，增加你的harbor地址，然后重启docker
 
 如：
- ` "insecure-registries": ["http://域名:端口"] `
-
+` "insecure-registries": ["http://域名:端口"] `
 
 - 登陆到你的harbor
 
@@ -91,6 +90,5 @@ docker tag source:tag target:tag
 可以看到已经推送成功了
 
 ![harbor2](../images/harbor3.png)
-
 
 其他配置可以详细查看[官方文档](https://goharbor.io/)
