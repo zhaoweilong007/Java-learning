@@ -1,37 +1,66 @@
-## Welcome to GitHub Pages
+# Java学习笔记
 
-You can use the [editor on GitHub](https://github.com/zhaoweilong007/Java-learning/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## 简介
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+😃请以此记录Java开发的学习，把学习过程中的知识点、工具做总结，利用业务时间写写自己的博客🎈
 
-### Markdown
+> [推荐在线阅读](http://doc.hkxx.icu)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## 序章
 
-```markdown
-Syntax highlighted code block
+- [介绍](foreword/介绍.md)
+- [计划](foreword/计划.md)
 
-# Header 1
-## Header 2
-### Header 3
+## 笔记
 
-- Bulleted
-- List
+- [java知识点总结](notes/java知识点总结.md)
+- [Java常见面试题](notes/java常见面试题.md)
+- [SpringCloud学习笔记](notes/SpringCloud学习笔记.md)
+- [kubernates学习笔记](notes/kubernates学习笔记.md)
+- [elasticSearch学习笔记](notes/elasticSearch学习笔记.md)
+- [redis笔记](/notes/redis.md)
+- [mysql笔记](/notes/mysql.md)
+- [docker笔记](/notes/docker.md)
+- [kubernates笔记](/notes/kubernates学习笔记.md)
+- [dubbo笔记](/notes/docker.md)
+- [rockerMQ笔记](/notes/rocketMQ.md)
+- [rabbitMQ笔记](/notes/rabbitMQ.md)
+- [kafka笔记](/notes/kafka.md)
+- [seata笔记](/notes/seata.md)
 
-1. Numbered
-2. List
+## 博客
 
-**Bold** and _Italic_ and `Code` text
+- [elasticSearch入门教程](/blog/elasticSearch入门教程.md)
+- [rocketMQ入门教程](/blog/rocketMQ入门教程.md)
+- [dubbo快速入门](/blog/dubbo快速入门)
+- [seata分布式事务使用](/blog/seata分布式事务使用.md)
+- [使用harbo搭建docker私有仓库](/blog/harbor教程.md)
+- [使用portainer管理docker镜像](/blog/portainer教程.md)
+- [docker-compose使用](/blog/docker-compose教程.md)
 
-[Link](url) and ![Image](src)
-```
+## 工具
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+- [window下的linux子系统](/tool/window下的linux子系统.md)
+- [ZSH-最好看的shell](/tool/最好看的shell.md)
+- [idea常用插件](/tool/idea常用插件.md)
+- [vim简明教程](/tool/vim简明教程.md)
+- [Arthas-强大Java诊断利器](/tool/强大的java诊断利器.md)
+- [window的包管理器scoop](/tool/window的包管理器.md)
+- [utool提升你的开发效率](/tool/utool提升你的开发效率.md)
 
-### Jekyll Themes
+## 其他
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/zhaoweilong007/Java-learning/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- [安卓如何获得ROOT权限](/other/安卓如何获得ROOT权限.md)
+- [科学上网的正确姿势](/other/clash的使用.md)
 
-### Support or Contact
+## 捐赠
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+🏆如果对你有帮助，请作者吃根热狗🌭
+
+<img src="http://doc.hkxx.icu/images/pay.png" width = "250" height = "250" />
+
+## 联系我
+
+😜扫码添加作者微信
+
+<img src="http://doc.hkxx.icu/images/weixin.jpg" width = "250" height = "250" />
