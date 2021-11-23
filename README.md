@@ -57,10 +57,10 @@
 
 🏆如果对你有帮助，请作者吃根热狗🌭
 
-<img src="http://doc.hkxx.icu/images/pay.png" width = "250" height = "250" />
+<img src="https://zhaoweilong007.github.io/Java-learning/images/pay.png" width = "250" height = "250" />
 
 ## 联系我
 
 😜扫码添加作者微信
 
-<img src="http://doc.hkxx.icu/images/weixin.jpg" width = "250" height = "250" />
+<img src="https://zhaoweilong007.github.io/Java-learning/images/weixin.jpg" width = "250" height = "250" />
