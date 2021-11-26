@@ -1,7 +1,5 @@
 # RabbitMq
 
-> 对应项目 [springboot-matrix](https://github.com/zhaoweilong007/spring-boot-matrix) 下`rabbitmq-consumer`、`rabbitmq-provider`
-
 ## 概念
 
 > 由erlang语言开发，基于AMQP协议实现的队列，消息队列负责储存和转发消息，消息队列主要用于异步、削峰、解耦
@@ -47,9 +45,17 @@
 
 发布者发送消息，需要等待消费者消费完返回结果，类似RPC远程过程调用，只不过是通过mq完成而不是直接建立连接
 
+## 消息确认
+
+生产者发送消息，broke接收消息后返回确认消息给生产者，消费者消费消息后，返回ack消息给broke
+
+- basicAck 确认消息 第一个参数是消息id，第二个参数是否批量，批量确认比当前通道小的tagId
+- basicReject 否定消息，第一个参数是消息id，第二个参数是否重入队列，重入队会重新放入队列头部，最坏情况会造成死循环，导致消息积压
+- basicNack 否定消息，跟Reject一样，只不过他可以多条
+
 ## 配置
 
-application.yml
+生产者配置
 
 ```yaml
 spring:
@@ -71,8 +77,57 @@ spring:
         size: 2048
         checkout-timeout: 3000
     connection-timeout: 3000
+    publisher-confirm-type: correlated
+    publisher-returns: true
 server:
   port: 9871
+```
+
+`publisher-confirm-type`属性替代以前的`spring.rabbitmq.publisher-confirm`
+
+- NONE值是禁用发布确认模式，是默认值
+- CORRELATED值是发布消息成功到交换器后会触发回调方法，如1示例
+-
+
+SIMPLE值经测试有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果返回false则会关闭channel，则接下来无法发送消息到broker;
+
+rabbitmq默认使用simpleConvert序列化，对象需要实现Serializable接口，配置为jackson序列化方式
+
+```java
+
+@Bean
+public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
+final RabbitTemplate rabbitTemplate=new RabbitTemplate(connectionFactory);
+    rabbitTemplate.setMandatory(true);
+    rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+    rabbitTemplate.setConfirmCallback(
+    (correlationData,ack,cause)->{
+    log.info("确认消息 correlationData：{}",JSON.toJSONString(correlationData));
+    log.info("确认消息 ack ：{}",ack);
+    log.info("确认消息失败原因 ：{}",cause);
+    });
+    rabbitTemplate.setReturnsCallback(
+    returned->log.info("ReturnsCallback :{}",JSON.toJSONString(returned)));
+    return rabbitTemplate;
+    }
+```
+
+> 注意生产者配置后，消费者需要自定义bean配置
+
+```java
+  @Bean
+public RabbitListenerContainerFactory<?> rabbitListenerContainerFactory(
+    ConnectionFactory connectionFactory){
+final SimpleRabbitListenerContainerFactory containerFactory=
+    new SimpleRabbitListenerContainerFactory();
+    //消息转换
+    containerFactory.setMessageConverter(new Jackson2JsonMessageConverter());
+    //连接工厂
+    containerFactory.setConnectionFactory(connectionFactory);
+    //设置手动ack模式
+    containerFactory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+    return containerFactory;
+    }
 ```
 
 ## 实践
@@ -101,6 +156,4 @@ rabbitmq-server start -detached
 rabbitmq-plugins enable rabbitmq_management
 ```
 
-访问 <http://127.0.0.1:5672>进入rabbitmq的管理界面，默认用户名密码`guest`
-
-
+访问 <http://127.0.0.1:5672>，可以看到rabbitmq的管理界面

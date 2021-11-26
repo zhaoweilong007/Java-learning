@@ -22,13 +22,14 @@
 **工作流程**
 
 - 启动NameServer，监听端口，等待Broker、producer、consumer连接
--
 
-Broker启动，跟每个NameServer建立长连接，定时发送心跳包，心跳i包包含当前broker信息（IP+端口）以及存储所有topic信息，注册成功后，Nameserver集群中就有topic跟broker的映射关系了
+- Broker启动，跟每个NameServer建立长连接，定时发送心跳包，心跳i包包含当前broker信息（IP+端口）以及存储所有topic信息，注册成功后，Nameserver集群中就有topic跟broker的映射关系了
 
 - 收发消息前，先创建topic，创建topic需要指定该topic存储在那些broker上，也可以在发送消息时自动创建topic
+
 - producer发送消息，启动时先跟Namserver集群中任意一台建立长连接，并从NameServer中获取当前发送的topic存在那些
   broker上，轮询从队列列表选择一个队列，然后与队列所在的broker建立长连接从而向broker发送消息
+
 - consumer跟producer类似，跟其中一台NameServer建立长连接，获取当前topic存在那些broker上，然后直接跟broker建立长连接，开始消费数据
 
 **消息样例**
