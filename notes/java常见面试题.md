@@ -85,7 +85,6 @@ gc堆分为新生代和老年代，当然每种收集器也不一样，像G1、Z
     - 调用system.gc()时
     - 老年代空间不足时
     - 方法区空间不足
-    - 通过minor gc进入老年代的平均大小大于老年代的可用内存
     - 由eden区、from Survivor向to Survivor区复制时，对象大小大于to Survivor大小，则把对象转到老年代，当对象大小大于老年代可用空间，触发full gc
 
 ### JVM有几种classload？为什么有这么多？
@@ -105,10 +104,6 @@ gc堆分为新生代和老年代，当然每种收集器也不一样，像G1、Z
 
 @AuotConfiguration注解会自动扫描MATE-INF下spring.factories文件，每个文件有个AutoConfig的配置类，通过加载这些自动类从而实现了spring的自动装配，@AutoCompontScan注解自动扫描包下面的组件注入到spring
 
-### Spring Bean的生命周期
-
-### Spring Bean的作用域
-
 ## 消息队列
 
 ### 消息中间件产品的优缺点？
@@ -126,13 +121,14 @@ gc堆分为新生代和老年代，当然每种收集器也不一样，像G1、Z
 
 ### Redis的数据类型及对应的数据结构
 
-### Redis为什么这么快？Redis采用多线程会有那些问题？
-
-redis时基于内存的操作，存储结构简单，key-value形式
-
-多线程可能会有并发问题
-
-
+- string
+- hash
+- list
+- set
+- zset
+- bitmaps
+- hyperLogLog
+- geo
 
 ---
 
