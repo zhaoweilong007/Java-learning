@@ -134,7 +134,7 @@ final SimpleRabbitListenerContainerFactory containerFactory=
 
 ### 部署
 
-下载rabbitmq，从[官网]()获取下载方式
+下载rabbitmq，从[官网](https://www.rabbitmq.com/)获取下载方式
 
 我在windows系统使用scoop下载rabbitmq
 
