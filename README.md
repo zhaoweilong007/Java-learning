@@ -37,6 +37,8 @@
 - [使用harbo搭建docker私有仓库](/blog/harbor教程.md)
 - [使用portainer管理docker镜像](/blog/portainer教程.md)
 - [docker-compose使用](/blog/docker-compose教程.md)
+- [skywalking实践](/blog/skywalking%E5%AE%9E%E8%B7%B5.md)
+- [prometheus实践](/blog/prometheus%E5%AE%9E%E8%B7%B5.md)
 
 ## 工具
 
