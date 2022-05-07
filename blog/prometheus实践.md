@@ -205,7 +205,6 @@ docker-compose up -d
 
 ![004](../images/alert-home.png)
 
-
 ### grafana配置
 
 **配置数据源**
@@ -222,7 +221,6 @@ docker-compose up -d
 
 仪表盘可以自己配置，也可以选择网上的导入，Grafana 提供了 Dashboard 市场<https://grafana.com/grafana/dashboards/> ，提供了大量直接可用的 Dashboard
 
-
 这里我们导入[Go Metrics](https://grafana.com/grafana/dashboards/10826)，url:https://grafana.com/grafana/dashboards/10826
 
 ![008](../images/grafana-db1.png)
@@ -231,9 +229,7 @@ docker-compose up -d
 
 ![009](../images/grafana-db2.png)
 
-
 自己还可以接入其他的dashboard
-
 
 ### 热更新prometheus配置
 
@@ -242,8 +238,56 @@ docker-compose up -d
 - kill -HUP pid
 - curl -X POST http://IP/-/reload
 
-## 项目接入
+### 常用alert告警规则
 
+可以在<https://awesome-prometheus-alerts.grep.to/>查看现有的规则配置
+
+- 磁盘几乎已满（剩余 < 10%）
+
+```yaml
+  # Please add ignored mountpoints in node_exporter parameters like
+  # "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|run)($|/)".
+  # Same rule using "node_filesystem_free_bytes" will fire when disk fills for non-root users.
+  - alert: HostOutOfDiskSpace
+    expr: (node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes < 10 and ON (instance, device, mountpoint) node_filesystem_readonly == 0
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host out of disk space (instance {{ $labels.instance }})
+      description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+```
+
+- CPU 负载 > 80%
+
+```yaml
+  - alert: HostHighCpuLoad
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host high CPU load (instance {{ $labels.instance }})
+      description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+```
+
+- JVM 内存已满（> 80%）
+
+```yaml
+  - alert: JvmMemoryFillingUp
+    expr: (sum by (instance)(jvm_memory_used_bytes{area="heap"}) / sum by (instance)(jvm_memory_max_bytes{area="heap"})) * 100 > 80
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: JVM memory filling up (instance {{ $labels.instance }})
+      description: "JVM memory is filling up (> 80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+```
+
+## 项目接入
 
 ### 添加依赖
 
@@ -255,9 +299,7 @@ dependencies {
 }
 ```
 
-
-启动项目，访问<http://127.0.0.1:8080/actuator/prometheus>,可以看到应用的 Prometheus 所需的格式的 Metrics 指标数据
-
+启动项目，访问<http://127.0.0.1:8787/actuator/prometheus>,可以看到应用的 Prometheus 所需的格式的 Metrics 指标数据
 
 再之前的`prometheus.yml`配置文件中增加job节点
 
@@ -267,8 +309,9 @@ dependencies {
 metrics_path: '/actuator/prometheus'
 # 目标服务器
 static_configs:
-  - targets: ['192.168.2.83:8787']
+  - targets: [ '192.168.2.83:8787' ]
 ```
+
 IP和端口注意修改成自己的
 
 ![010](../images/actuator.png)
@@ -287,11 +330,140 @@ IP和端口注意修改成自己的
 
 以上就是springboot集成prometheus，当然功能远不止如此，更多功能查看官网的文档吧
 
+### 埋点监控，自定义仪表盘
+
+通过MeterRegistry自定义指标，springboot默认自动注册了MeterRegistry的实现类
+
+```java
+
+@Component
+public class PrometheusMonitor implements InitializingBean {
+
+    /** 描述：请求错误次数 */
+    @Getter
+    @Setter
+    private Counter requestErrorCount;
+
+    /** 描述：下单次数 */
+    @Getter
+    @Setter
+    private Counter orderCount;
+
+    /** 下单总金额 */
+    @Getter
+    @Setter
+    private DistributionSummary orderAmount;
+
+    private final MeterRegistry registry;
+
+    @Autowired
+    public PrometheusMonitor(MeterRegistry registry) {
+        this.registry = registry;
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        requestErrorCount = registry.counter("request_error_count", "reqErrorTotal", "error");
+        orderCount = registry.counter("order_count", "orderTotal", "order");
+        orderAmount = registry.summary("order_amount", "orderAmount", "amount");
+    }
+}
+```
+
+在controller中记录指标
+
+```java
+
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+public class ReqController {
+
+    private final PrometheusMonitor monitor;
+
+    /** 模拟下单请求 */
+    @GetMapping("/order")
+    public String order(@RequestParam(required = false, defaultValue = "0") Long orderId) {
+        log.info("orderId: {}", orderId);
+
+        if (orderId <= 0) {
+            throw new RuntimeException("orderId必须大于0");
+        }
+
+        // 记录下单次数
+        monitor.getOrderCount().increment();
+
+        Random random = new Random();
+        int amount = random.nextInt(100);
+        // 记录下单总金额
+        monitor.getOrderAmount().record(amount);
+        return "success";
+    }
+}
+
+```
+
+异常处理
+
+```java
+
+@RestControllerAdvice
+@RequiredArgsConstructor
+public class GlobalExceptionHandler {
+
+    private final PrometheusMonitor monitor;
+
+    @ExceptionHandler(value = Exception.class)
+    public String exceptionHandler(Exception e) {
+        // 记录请求失败次数
+        monitor.getRequestErrorCount().increment();
+        return e.getMessage();
+    }
+}
+
+```
+
+配置仪表盘
+
+![011](../images/panel01.png)
+
+![012](../images/panel02.png)
+
+配置应用告警,在之前的node_down.yml配置文件中增加alert节点
+
+```yaml
+  - alert: app_down
+    expr: up{job="prometheusApp"} == 0
+    for: 10s
+    annotations:
+      summary: "订单服务已下线，请检查！！"
+  # 10分钟内下单失败率是否大于10
+  - alert: order-error-rate-high
+    expr: sum(rate(request_error_count_total{job="prometheusApp"}[10m]))/sum(rate(order_count_total{job="prometheusApp"}[10m])) * 100 >10
+    for: 10s
+    annotations:
+      summary: "订单服务下单失败率高于10%"
+      description: "订单服务下单失败率高于10%,当前值：{{$value}},尽快处理！！"
+
+```
+
+然后自己测试下发送错误请求，以及关闭应用，可以收到告警邮件了
+
+![013](../images/email01.png)
+
+![014](../images/email02.png)
+
 ### 资料
 
-prometheu官网:<https://prometheus.io/>
-dashborad仪表盘：<https://grafana.com/grafana/dashboards/>
+prometheus官网:<https://prometheus.io/>
+
+prometheus中文参考:<https://yunlzheng.gitbook.io/prometheus-book/>
+
+dashboard仪表盘：<https://grafana.com/grafana/dashboards/>
+
+prometheus alert告警集：<https://awesome-prometheus-alerts.grep.to/>
 
 参考blog:
 <https://www.iocoder.cn/Spring-Boot/Prometheus-and-Grafana/?github>，
+
 <https://juejin.cn/post/6844903809517371406>
