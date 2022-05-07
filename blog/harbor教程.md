@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [使用harbor搭建docker私有仓库](#%E4%BD%BF%E7%94%A8harbor%E6%90%AD%E5%BB%BAdocker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93)
+  - [环境准备](#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87)
+  - [安装](#%E5%AE%89%E8%A3%85)
+  - [开始上传镜像到harbor](#%E5%BC%80%E5%A7%8B%E4%B8%8A%E4%BC%A0%E9%95%9C%E5%83%8F%E5%88%B0harbor)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 使用harbor搭建docker私有仓库
 
 > 一般公司都有自己docker私有仓库，而harbor就是其中之一，下面教你使用harbor搭建私有的docker仓库

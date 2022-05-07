@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [RocketMQ入门教程](#rocketmq%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B)
+  - [概述](#%E6%A6%82%E8%BF%B0)
+  - [支持的特性](#%E6%94%AF%E6%8C%81%E7%9A%84%E7%89%B9%E6%80%A7)
+  - [安装部署](#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2)
+      - [项目搭建](#%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # RocketMQ入门教程
 
 ## 概述

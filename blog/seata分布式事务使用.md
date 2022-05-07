@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [seata](#seata)
+  - [seata实践](#seata%E5%AE%9E%E8%B7%B5)
+    - [准备](#%E5%87%86%E5%A4%87)
+    - [导入数据脚本](#%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # seata
 
 ## seata实践

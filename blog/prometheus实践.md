@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Prometheus实践](#prometheus%E5%AE%9E%E8%B7%B5)
+  - [安装](#%E5%AE%89%E8%A3%85)
+    - [docker部署](#docker%E9%83%A8%E7%BD%B2)
+    - [grafana配置](#grafana%E9%85%8D%E7%BD%AE)
+    - [热更新prometheus配置](#%E7%83%AD%E6%9B%B4%E6%96%B0prometheus%E9%85%8D%E7%BD%AE)
+    - [常用alert告警规则](#%E5%B8%B8%E7%94%A8alert%E5%91%8A%E8%AD%A6%E8%A7%84%E5%88%99)
+  - [项目接入](#%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%85%A5)
+    - [添加依赖](#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96)
+    - [埋点监控，自定义仪表盘](#%E5%9F%8B%E7%82%B9%E7%9B%91%E6%8E%A7%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%AA%E8%A1%A8%E7%9B%98)
+    - [资料](#%E8%B5%84%E6%96%99)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Prometheus实践
 
 本项目github地址:<https://github.com/zhaoweilong007/spring-boot-matrix/tree/main/prometheus>
