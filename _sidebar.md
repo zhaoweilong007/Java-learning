@@ -28,7 +28,8 @@
     * [docker-compose使用](/blog/docker-compose教程.md)
     * [skywalking实践](/blog/skywalking%E5%AE%9E%E8%B7%B5.md)
     * [prometheus实践](/blog/prometheus%E5%AE%9E%E8%B7%B5.md)
-    * [jenkins实践](/blog/Jenkins实现自动化部署.md)
+    * [docker+jenkins+jib实现CI/CD](/blog/Jenkins实现自动化部署.md)
+    * [docker+ELK收集springboot日志](/blog/elk实践.md)
 
 * 工具
     * [window下的linux子系统](/tool/window下的linux子系统.md)
