@@ -14,7 +14,6 @@
     * [rabbitMQ笔记](/notes/rabbitMQ.md)
     * [kafka笔记](/notes/kafka.md)
     * [SpringCloud笔记](notes/SpringCloud学习笔记.md)
-    * [dubbo笔记](/notes/docker.md)
     * [seata笔记](/notes/seata.md)
 
 * 博客
