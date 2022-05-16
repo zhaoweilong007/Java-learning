@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Window的包管理器](#window%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8)
+  - [安装scoop](#%E5%AE%89%E8%A3%85scoop)
+  - [使用ari2多线程下载](#%E4%BD%BF%E7%94%A8ari2%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD)
+  - [添加储存库](#%E6%B7%BB%E5%8A%A0%E5%82%A8%E5%AD%98%E5%BA%93)
+  - [安装多jdk](#%E5%AE%89%E8%A3%85%E5%A4%9Ajdk)
+  - [其他命令](#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4)
+  - [按章MySQL](#%E6%8C%89%E7%AB%A0mysql)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Window的包管理器
 
 > Scoop是Windows的命令行安装程序。 都知道window安装非常麻烦，每次安装软件要从官网下载可执行程序包，手动安装，安装开发环境更是麻烦的要死，像jdk、mysql、redis等等

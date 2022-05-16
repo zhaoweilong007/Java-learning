@@ -37,6 +37,7 @@
     * [Arthas-强大Java诊断利器](/tool/强大的java诊断利器.md)
     * [window的包管理器scoop](/tool/window的包管理器.md)
     * [uTool提升你的开发效率](/tool/utool提升你的开发效率.md)
+    * [ubuntu22.04安装docker.md](/tool/ubuntu22.04安装docker.md)
 
 * 其他
     * [安卓如何获得ROOT权限](/other/安卓如何获得ROOT权限.md)

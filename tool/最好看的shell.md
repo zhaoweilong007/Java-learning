@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [最好看的shell-zsh](#%E6%9C%80%E5%A5%BD%E7%9C%8B%E7%9A%84shell-zsh)
+  - [安装zsh](#%E5%AE%89%E8%A3%85zsh)
+  - [安装oh my zsh](#%E5%AE%89%E8%A3%85oh-my-zsh)
+  - [常用插件](#%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6)
+  - [安装Terminal](#%E5%AE%89%E8%A3%85terminal)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 最好看的shell-zsh
 
 > 常见的shell如bash、fish、sh、csh、ksh，但是都没有zsh这么好看
