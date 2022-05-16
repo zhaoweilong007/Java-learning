@@ -94,3 +94,56 @@ demo演示
 -更新 scoop update
 
 -清除老版本 scoop cleanup
+
+## 按章MySQL
+
+```shell
+scoop install mysql
+```
+
+默认安装最新的MySQL版本，我这里的是8.0.29
+
+安装成功后，使用管理员身份打开cmd
+
+执行mysql初始化命令
+
+```shell
+mysqld --initialize-insecure
+```
+
+会发现程序在mysql的根目录下自动创建了data文件夹以及相关的文件
+
+注册mysql服务,路径改成自己的配置文件路径
+
+```shell
+mysqld --install MySQL --defaults-file="C:\Users\admin\scoop\apps\mysql\current\my.ini"
+```
+
+启动mysql服务
+
+```shell
+net start mysql
+```
+
+修改mysql密码，进行mysql控制台,第一次不需要输入直接回车进入
+
+```shell
+mysql -u root -p
+```
+
+mysql8.0以上使用以下修改密码，先执行`use mysql;`再执行
+
+```shell
+alter user 'root'@'localhost' identified by '设置的新密码';
+```
+
+执行成功，刷新权限
+
+```shell
+flush priviliges;
+```
+
+![](../images/mysql.png)
+
+查看mysql所有命令
+![](../images/mysql1.png)
