@@ -45,15 +45,15 @@ document使用json数据格式
 }
 ```
 
-- _index 文档所属索引名称。
+- `_index` 文档所属索引名称。
 
-- _id Doc的主键。在写入的时候，可以指定该Doc的ID值，如果不指定，则系统自动生成一个唯一的UUID值。
+- `_id` Doc的主键。在写入的时候，可以指定该Doc的ID值，如果不指定，则系统自动生成一个唯一的UUID值。
 
-- _version 文档的版本信息。Elasticsearch通过使用version来保证对文档的变更能以正确的顺序执行，避免乱序造成的数据丢失。
+- `_version` 文档的版本信息。Elasticsearch通过使用version来保证对文档的变更能以正确的顺序执行，避免乱序造成的数据丢失。
 
-- _score 文档的分数。
+- `_score` 文档的分数。
 
-- _source 文档的原始JSON数据。例如保存的日志信息。
+- `_source` 文档的原始JSON数据。例如保存的日志信息。
 
 ### 数据类型
 
@@ -100,25 +100,97 @@ sudo bin/elasticsearch-plugin remove analysis-smartcn
 
 ## elasticsearch REST API
 
-> ES通过rest api来操作数据，支持的操作有：
+> ES通过rest api来操作数据,主要学习以下几种
 
-* index：创建索引
-* get：获取文档
-* search：搜索文档
-* update：更新文档
-* delete：删除文档
+- Index APIs
+- Document APIs
+- Search APIs
+- SQL APIs
+- cat APIs
+- Cluster APIs
+- Data stream APIs
+- Info API
+- EQL search APIs
 
-使用ElasticVue扩展插件操作es
+可以对比参考[es官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)，建议学习最新版本文档
 
-### 创建索引
+![](../images/esdoc.png)
+
+### 索引API
+
+#### 创建索引
+
+请求格式：
+
+`PUT /<index>`
+
+例如：
 
 ```
-GET /qwer 
+GET /qwer
+```
+
+可选参数有：
+
+- aliases
+
+> 索引的别名
+
+```json
+{
+  "aliases": {
+    "alias_1": {},
+    "alias_2": {
+      "filter": {
+        "term": {
+          "user.id": "kimchy"
+        }
+      },
+      "routing": "shard-1"
+    }
+  }
+}
+```
+
+- mappings
+
+> 映射是定义文档及其包含的字段如何存储和索引的过程。
+> 映射索引中的字段，包括字段名称、字段类型等其他特性
+
+```json
+{
+  "settings": {
+    "number_of_shards": 1
+  },
+  "mappings": {
+    "properties": {
+      "field1": {
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+- settings
+
+> 索引设置，number_of_shards分片数，number_of_replicas副本数
+
+```json
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 3,
+      "number_of_replicas": 2
+    }
+  }
+}
+
 ```
 
 ![](../images/es1.png)
 
-### 查看所有索引
+#### 查看索引列表
 
 ```
 GET /_cat/indices?v
@@ -126,12 +198,64 @@ GET /_cat/indices?v
 
 ![](../images/es2.png)
 
-### 创建文档
+#### 查看索引详细信息
 
-可以指定id，不指定id的话会自动生成
+请求格式：
+
+`GET /<index>`
+
+> 支持 `_all` 或者 `*`查询所有
 
 ```
-POST /qwer/_create/1
+GET /qwer
+```
+
+#### 更新索引设置
+
+请求格式：
+
+`put /<target>/<action>`
+
+> target就是对应索引名称，action支持
+
+- _settings: 索引设置
+- _mapping：映射设置
+
+例如:
+
+```
+PUT /qwer/_settings
+{
+  "index":{
+    "number_of_replicas":1
+  }
+}
+```
+
+#### 删除索引
+
+请求格式：
+
+`DELETE /<target>`
+
+### 文档API
+
+#### 创建更新文档
+
+请求格式：
+
+`PUT /<target>/_doc/<_id>`
+
+`POST /<target>/_doc/`
+
+`PUT /<target>/_create/<_id>`
+
+`POST /<target>/_create/<_id>`
+
+put用于更新，post新增，`POST /<target>/_doc/<_id >`可以指定id，不指定id的话会自动生成
+
+```
+POST /qwer/_doc/1
 {
  "name":"寒冰射手",
  "desc":"世间万物皆系与一箭之上"
@@ -140,31 +264,270 @@ POST /qwer/_create/1
 
 ![](../images/es3.png)
 
-### 更新文档
+#### 查询文档
+
+请求格式：
+
+`GET <index>/_doc/<_id>`
+
+`HEAD <index>/_doc/<_id>`
+
+`GET <index>/_source/<_id>`
+
+`HEAD <index>/_source/<_id>`
 
 ```
-
-```
-
-![](../images/es4.png)
-
-### 删除文档
-
-```
-
-```
-
-![](../images/es4.png)
-
-### 查询文档
-
-```
-
+GET /qwer/_doc/1
 ```
 
 ![](../images/es4.png)
 
-## DSL语法
+#### 删除文档
+
+`DELETE /<index>/_doc/<_id>`
+
+### 搜索API
+
+请求格式：
+
+`GET /<target>/_search`
+
+`GET /_search`
+
+`POST /<target>/_search`
+
+`POST /_search`
+
+search的查询参数非常多，具体可以参考官网文档说明，我列下几个比较常用的
+
+#### query parameter:
+
+| 参数名     | 说明                                                                                                                                                                                              |
+|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| from    | 起始文档偏移量。需要为非负数，默认为0.                                                                                                                                                                            |
+| size    | 定义要返回的命中数。默认为10.默认情况下，您不能使用from和 size参数对超过 10,000 个匹配进行分页。要翻阅更多点击，请使用该 [search_after](https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#search-after)参数 |
+| sort    | 以逗号分隔的 <field>:<direction> 对列表排序。                                                                                                                                                               |
+| _source | 指示为匹配文档返回哪些源字段。这些字段在hits._source搜索响应的属性中返回。默认为true. （字符串）要返回的源字段的逗号分隔列表。支持通配符 `*` 模式。                                                                                                           |
+| q       | 以 Lucene query DSL 语法进行查询,                                                                                                                                                                      |                                                                                                                                                                            |
+
+```
+GET /qwer/_search?q=name:寒冰射手&size=1
+{
+  "profile": true
+}
+```
+
+![](../images/search1.png)
+
+上面这种URL search用的比较少，重要使用request Body search，也就是DSL语法
+
+#### Query DSL
+
+> Elasticsearch 提供了基于 JSON 的完整 Query DSL（Domain Specific Language）来定义查询。将查询 DSL 视为查询的 AST（抽象语法树），由两种类型的子句组成：
+
+- 叶查询子句
+
+叶查询子句在特定字段中查找特定值，例如 match、term或 range查询。这些查询可以自己使用。
+
+- 复合查询子句
+
+复合查询子句包装其他叶或复合查询，并用于以逻辑方式组合多个查询（例如 boolordis_max查询），或改变它们的行为（例如 constant_score查询）。
+查询子句的行为不同，具体取决于它们是在 查询上下文还是过滤器上下文中使用。
+
+##### 全文搜索
+
+###### intervals query
+
+> 根据匹配词的顺序和接近度返回文档
+> 隔查询使用匹配规则，由一小组定义构成。然后将这些规则应用于指定字段中的术语。
+> 这些定义产生了跨越文本正文中术语的最小间隔序列。这些间隔可以由父源进一步组合和过滤
+
+```
+POST _search
+{
+  "query": {
+    "intervals":{
+      "name":{
+        "match":{
+          "query":"寒冰"
+        }
+      }
+    }
+  }
+}
+```
+
+支持以下几种组合：
+
+- match 对搜索条件进行分词然后查询匹配
+- prefix 对前缀匹配
+- wildcard 正则表达式匹配
+- fuzzy 模糊匹配
+- all_of 返回所有规则组合的匹配项
+- any_of 返回任意一个子规则的匹配项
+
+这里不展开说明了，太多了，自行去官网查看
+
+###### match query
+
+> 返回与提供的文本、数字、日期或布尔值匹配的文档。在匹配之前分析提供的文本
+> match查询是执行全文搜索的标准查询，包括模糊匹配选项
+
+```
+GET /qwer/_search
+{
+  "query":{
+    "match": {
+      "name": {
+        "query": "射手",
+        "operator": "and"
+      }
+    }
+  }
+}
+```
+
+###### match_bool_prefix query
+
+> 匹配布尔前缀
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "match_bool_prefix": {
+      "desc": "世"
+    }
+  }
+}
+```
+
+###### match_phrase query
+
+> 短语查询匹配
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "手"
+    }
+  }
+}
+```
+
+###### match_phrase_prefix query
+
+> 短语前缀匹配
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "手"
+    }
+  }
+}
+```
+
+###### multi_match query
+
+> 多字段匹配
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "手",
+      "fields": ["name","desc"]
+    }
+  }
+}
+```
+
+###### combined_fields query
+
+###### query_string query
+
+> 查询字符串,使用 query_string 查询来创建包含通配符、跨多个字段的搜索等的复杂搜索
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "query_string": {
+      "query": "name:冰"
+    }
+  }
+}
+```
+
+查询字段语法:
+
+模糊匹配：字段包含a
+
+- 字段:a
+
+条件匹配：字段包含a或者b
+
+- 字段(a or b)
+
+精确匹配：字段肯定包含a
+
+- 字段:"a"
+
+正则匹配：所有字段包含a
+
+- *:(a)
+
+```
+GET /qwer/_search
+{
+  "query": {
+    "query_string": {
+      "query":"*:手"
+    }
+  }
+}
+```
+
+通配符
+
+- 使用`?`替换单个字符，`*`替换零个或多个字符
+
+不为空：desc字段不为空
+
+- _exists_:desc
+
+###### simple_query_string query
+
+#### response
+
+- took 本次查询花费的时间
+- timed_out 是否超时
+- _shards 找了几个分片
+
+### SQL Search API
+
+> 可以使用sql语法对文档进行搜索，使用起来也非常方便
+
+例如
+
+```
+GET _sql?format=json
+{
+  "query": """
+  SELECT * FROM "qwer"
+  """
+}
+```
+
+支持POST和GET format支持多种数据格式，如csv、txt、yaml等
+
+![](../images/essql.png)
 
 ## 集群、节点、分片及副本
 
