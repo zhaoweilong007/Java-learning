@@ -68,6 +68,8 @@ document使用json数据格式
 
 ## 中文分词插件
 
+es内置很多分词器，但是对中文分词并不友好，例如使用standard分词器对一句中文话进行分词，会分成一个字一个字的。这时可以使用第三方的Analyzer插件，比如 ik、pinyin等。这里以ik为例
+
 使用ik,[elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)
 
 或者使用elasticSearch官方的:[analysis-smartcn](https://github.com/elastic/elasticsearch-analysis-smartcn)
@@ -124,15 +126,60 @@ sudo bin/elasticsearch-plugin remove analysis-smartcn
 
 `PUT /<index>`
 
+创建索引时可以指定以下内容
+
+- 索引设置
+- 索引中字段的映射
+- 索引别名
+
 例如：
 
+创建名为lol的索引
+
+包含以下字段
+
+- name 名称 使用ik分词解析器
+- desc 描述 使用ik分词解析器
+- position 位置
+- age 年龄
+
+`number_of_shards` 分片数量为1，`number_of_replicas`副本数量为1
+
 ```
-GET /qwer
+PUT /lol
+{
+  "settings":{
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings":{
+    "properties": {
+      "name":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "desc":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "position":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "age":{
+        "type": "integer"
+      }
+    }
+  }
+}
 ```
 
 可选参数有：
 
-- aliases
+##### aliases
 
 > 索引的别名
 
@@ -152,16 +199,15 @@ GET /qwer
 }
 ```
 
-- mappings
+##### mappings
 
-> 映射是定义文档及其包含的字段如何存储和索引的过程。
+> [!note]映射是定义文档及其包含的字段如何存储和索引的过程
 > 映射索引中的字段，包括字段名称、字段类型等其他特性
+
+> ps:只能在创建指定mapping，或者新增field mapping，不能更新field mapping
 
 ```json
 {
-  "settings": {
-    "number_of_shards": 1
-  },
   "mappings": {
     "properties": {
       "field1": {
@@ -172,7 +218,7 @@ GET /qwer
 }
 ```
 
-- settings
+##### settings
 
 > 索引设置，number_of_shards分片数，number_of_replicas副本数
 
@@ -189,6 +235,88 @@ GET /qwer
 ```
 
 ![](../images/es1.png)
+
+#### 更新索引mapping
+
+> [!note]
+> 本身不支持更新mapping,如果要修改字段mapping，使用reindex进行重建
+> 先将索引数据复制到一个新的索引上，删除旧索引，再将新的复制到旧的索引上
+
+复制到lol_new
+
+```
+POST /_reindex
+{
+ "source": {
+   "index": "lol"
+ },
+ "dest": {
+   "index": "lol_new"
+ }
+}
+```
+
+删除lol索引
+
+```
+DELETE /lol
+```
+
+创建新的lol索引,重新设置mapping映射
+
+```
+PUT /lol
+{
+  "settings":{
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings":{
+    "properties": {
+      "name":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "desc":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "position":{
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "search_analyzer": "ik_smart"
+      },
+      "age":{
+        "type": "integer"
+      }
+    }
+  }
+}
+```
+
+复制到lol
+
+```
+POST /_reindex
+{
+ "source": {
+   "index": "lol_new"
+ },
+ "dest": {
+   "index": "lol"
+ }
+}
+```
+
+最后删除lol_new索引
+
+```
+DELETE /lol
+```
+
+这样才能更新mapping
 
 #### 查看索引列表
 
@@ -207,7 +335,7 @@ GET /_cat/indices?v
 > 支持 `_all` 或者 `*`查询所有
 
 ```
-GET /qwer
+GET /lol
 ```
 
 #### 更新索引设置
@@ -224,7 +352,7 @@ GET /qwer
 例如:
 
 ```
-PUT /qwer/_settings
+PUT /lol/_settings
 {
   "index":{
     "number_of_replicas":1
@@ -255,12 +383,43 @@ PUT /qwer/_settings
 put用于更新，post新增，`POST /<target>/_doc/<_id >`可以指定id，不指定id的话会自动生成
 
 ```
-POST /qwer/_doc/1
+POST /lol/_doc/1
 {
  "name":"寒冰射手",
- "desc":"世间万物皆系与一箭之上"
+ "desc":"世间万物皆系与一箭之上",
+ "position":"射手",
+ "age":18
 }
 ```
+
+response
+
+```json
+{
+  "_index": "lol",
+  "_id": "1",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+    "total": 2,
+    "successful": 1,
+    "failed": 0
+  },
+  "_seq_no": 0,
+  "_primary_term": 1
+}
+
+```
+
+响应参数说明:
+
+- _index 索引名称
+- _id 文档id
+- _version 版本号
+- result 结果
+- _shards 分片信息
+- _seq_no 序列号
+- _primary_term
 
 ![](../images/es3.png)
 
@@ -277,7 +436,7 @@ POST /qwer/_doc/1
 `HEAD <index>/_source/<_id>`
 
 ```
-GET /qwer/_doc/1
+GET /lol/_doc/1
 ```
 
 ![](../images/es4.png)
@@ -311,15 +470,13 @@ search的查询参数非常多，具体可以参考官网文档说明，我列�
 | q       | 以 Lucene query DSL 语法进行查询,                                                                                                                                                                      |                                                                                                                                                                            |
 
 ```
-GET /qwer/_search?q=name:寒冰射手&size=1
+GET /lol/_search?q=name:寒冰射手&size=1
 {
   "profile": true
 }
 ```
 
-![](../images/search1.png)
-
-上面这种URL search用的比较少，重要使用request Body search，也就是DSL语法
+上面这种URL search用的比较少，主要使用request Body search，也就是DSL语法
 
 #### Query DSL
 
@@ -334,13 +491,16 @@ GET /qwer/_search?q=name:寒冰射手&size=1
 复合查询子句包装其他叶或复合查询，并用于以逻辑方式组合多个查询（例如 boolordis_max查询），或改变它们的行为（例如 constant_score查询）。
 查询子句的行为不同，具体取决于它们是在 查询上下文还是过滤器上下文中使用。
 
-##### 全文搜索
+#### full text search (全文搜索)
 
-###### intervals query
+##### intervals query
 
 > 根据匹配词的顺序和接近度返回文档
 > 隔查询使用匹配规则，由一小组定义构成。然后将这些规则应用于指定字段中的术语。
 > 这些定义产生了跨越文本正文中术语的最小间隔序列。这些间隔可以由父源进一步组合和过滤
+
+
+查询name包含寒冰的文档
 
 ```
 POST _search
@@ -357,6 +517,8 @@ POST _search
 }
 ```
 
+![](../images/qdsl1.png)
+
 支持以下几种组合：
 
 - match 对搜索条件进行分词然后查询匹配
@@ -368,31 +530,36 @@ POST _search
 
 这里不展开说明了，太多了，自行去官网查看
 
-###### match query
+##### match query
 
 > 返回与提供的文本、数字、日期或布尔值匹配的文档。在匹配之前分析提供的文本
 > match查询是执行全文搜索的标准查询，包括模糊匹配选项
 
+
+查询匹配name包含射手的文档
+
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query":{
     "match": {
       "name": {
         "query": "射手",
-        "operator": "and"
+        "analyzer": "ik_max_word"
       }
     }
   }
 }
 ```
 
-###### match_bool_prefix query
+##### match_bool_prefix query
 
 > 匹配布尔前缀
 
+查询desc以世开头的文档
+
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
     "match_bool_prefix": {
@@ -402,64 +569,97 @@ GET /qwer/_search
 }
 ```
 
-###### match_phrase query
+##### match_phrase query
 
 > 短语查询匹配
 
+查询name包含手的短语的文档
+
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
     "match_phrase": {
-      "name": "手"
+      "name": {
+        "query": "射手",
+        "analyzer": "ik_max_word"
+      }
     }
   }
 }
 ```
 
-###### match_phrase_prefix query
+##### match_phrase_prefix query
 
 > 短语前缀匹配
 
+查询name包含短语前缀包含手的文档
+
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
-    "match_phrase": {
-      "name": "手"
+    "match_phrase_prefix": {
+      "name": {
+        "query": "石"
+      }
     }
   }
 }
 ```
 
-###### multi_match query
+##### multi_match query
 
-> 多字段匹配
+> 允许对多个字段match查询
+
+
+查询name包含射手或者desc包含双手
 
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
     "multi_match": {
-      "query": "手",
-      "fields": ["name","desc"]
+      "query": "射手 双手",
+      "fields": ["name","desc"],
+      "operator": "or",
+      "analyzer": "ik_max_word"
     }
   }
 }
 ```
 
-###### combined_fields query
+##### combined_fields query
 
-###### query_string query
+> 组合字段查询，允许多字段全文搜索
+
+field参数：仅支持文本字段，并且它们都必须具有相同的搜索分析器
+
+查询name包含射手或者desc包含双手
+
+```
+GET /lol/_search
+{
+  "query": {
+    "combined_fields": {
+      "query": "射手 双手",
+      "fields": ["name","desc"],
+      "operator": "or"
+    }
+  }
+}
+```
+
+##### query_string query
 
 > 查询字符串,使用 query_string 查询来创建包含通配符、跨多个字段的搜索等的复杂搜索
 
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
     "query_string": {
-      "query": "name:冰"
+      "query": "name:寒冰"
     }
   }
 }
@@ -483,12 +683,16 @@ GET /qwer/_search
 
 - *:(a)
 
+查询所有字段包含单的文档，查询时指定分词器，分词器支持正则
+
 ```
-GET /qwer/_search
+GET /lol/_search
 {
   "query": {
     "query_string": {
-      "query":"*:手"
+      "query":"*:*手",
+      "analyze_wildcard": true, 
+      "analyzer": "ik_max_word"
     }
   }
 }
@@ -502,13 +706,45 @@ GET /qwer/_search
 
 - _exists_:desc
 
-###### simple_query_string query
+#### Boolean Query（布尔查询）
+
+> 匹配与其他查询的布尔组合匹配的文档的查询。 bool 查询映射到 Lucene BooleanQuery。它是使用一个或多个布尔子句构建的，每个子句都有一个类型的出现。出现类型有：
+
+- must 必须匹配，匹配度越高，score分数越高
+- filter 过滤
+- should 可能匹配（可有可无不影响）
+- must_not 不能匹配
+
+查询所有字段必须包含手，过滤position字段包含手的文档
+
+```http request
+GET /lol/_search
+{
+  "query":{
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "*:*手"
+          }
+        }
+      ],
+      "filter":{
+       "term": {
+         "position": "手"
+       }
+      }
+    }
+  }
+}
+```
 
 #### response
 
 - took 本次查询花费的时间
 - timed_out 是否超时
 - _shards 找了几个分片
+- hits 命中数据
 
 ### SQL Search API
 
@@ -520,14 +756,39 @@ GET /qwer/_search
 GET _sql?format=json
 {
   "query": """
-  SELECT * FROM "qwer"
+  SELECT * FROM "lol"
   """
 }
 ```
 
+![](../images/essql.png)
+
 支持POST和GET format支持多种数据格式，如csv、txt、yaml等
 
-![](../images/essql.png)
+sql语法格式：
+
+```
+SELECT [TOP [ count ] ] select_expr [, ...]
+[ FROM table_name ]
+[ WHERE condition ]
+[ GROUP BY grouping_element [, ...] ]
+[ HAVING condition]
+[ ORDER BY expression [ ASC | DESC ] [, ...] ]
+[ LIMIT [ count ] ]
+[ PIVOT ( aggregation_expr FOR column IN ( value [ [ AS ] alias ] [, ...] ) ) ]
+```
+
+> ps sql语法中，双引号 " 用于列和表标识符,单引号 ' 用于字符串文字
+
+#### SQL CLI
+
+es包含了一个sql的客户端，可以通过客户端使用sql语法查询es
+
+```shell
+./bin/elasticsearch-sql-cli http://sql_user:strongpassword@some.server:9200
+```
+
+![](../images/sqlcli.png)
 
 ## 集群、节点、分片及副本
 
