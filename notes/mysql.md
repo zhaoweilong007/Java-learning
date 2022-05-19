@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MySQL](#mysql)
+  - [MySQL架构](#mysql%E6%9E%B6%E6%9E%84)
+    - [mysql查询和更新执行流程](#mysql%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
+  - [MySQL索引](#mysql%E7%B4%A2%E5%BC%95)
+  - [MySQL隔离级别](#mysql%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB)
+  - [redo log、bin log、undo log](#redo-logbin-logundo-log)
+    - [redo log（重做日志）](#redo-log%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97)
+    - [bin log（归档日志）](#bin-log%E5%BD%92%E6%A1%A3%E6%97%A5%E5%BF%97)
+    - [undo log（回滚日志）](#undo-log%E5%9B%9E%E6%BB%9A%E6%97%A5%E5%BF%97)
+  - [MVCC](#mvcc)
+    - [一致性非锁定读](#%E4%B8%80%E8%87%B4%E6%80%A7%E9%9D%9E%E9%94%81%E5%AE%9A%E8%AF%BB)
+    - [锁定读](#%E9%94%81%E5%AE%9A%E8%AF%BB)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # MySQL
 
 ## MySQL架构

@@ -1,3 +1,50 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ElasticSearch学习笔记](#elasticsearch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)
+  - [安装](#%E5%AE%89%E8%A3%85)
+  - [基本概念](#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+    - [Index（索引）](#index%E7%B4%A2%E5%BC%95)
+    - [Document（文档）](#document%E6%96%87%E6%A1%A3)
+    - [数据类型](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+  - [中文分词插件](#%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E6%8F%92%E4%BB%B6)
+  - [elasticsearch REST API](#elasticsearch-rest-api)
+    - [索引API](#%E7%B4%A2%E5%BC%95api)
+      - [创建索引](#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95)
+        - [aliases](#aliases)
+        - [mappings](#mappings)
+        - [settings](#settings)
+      - [更新索引mapping](#%E6%9B%B4%E6%96%B0%E7%B4%A2%E5%BC%95mapping)
+      - [查看索引列表](#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E5%88%97%E8%A1%A8)
+      - [查看索引详细信息](#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF)
+      - [更新索引设置](#%E6%9B%B4%E6%96%B0%E7%B4%A2%E5%BC%95%E8%AE%BE%E7%BD%AE)
+      - [删除索引](#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95)
+    - [文档API](#%E6%96%87%E6%A1%A3api)
+      - [创建更新文档](#%E5%88%9B%E5%BB%BA%E6%9B%B4%E6%96%B0%E6%96%87%E6%A1%A3)
+      - [查询文档](#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3)
+      - [删除文档](#%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3)
+    - [搜索API](#%E6%90%9C%E7%B4%A2api)
+      - [query parameter:](#query-parameter)
+      - [Query DSL](#query-dsl)
+      - [full text search (全文搜索)](#full-text-search-%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2)
+        - [intervals query](#intervals-query)
+        - [match query](#match-query)
+        - [match_bool_prefix query](#match_bool_prefix-query)
+        - [match_phrase query](#match_phrase-query)
+        - [match_phrase_prefix query](#match_phrase_prefix-query)
+        - [multi_match query](#multi_match-query)
+        - [combined_fields query](#combined_fields-query)
+        - [query_string query](#query_string-query)
+      - [Boolean Query（布尔查询）](#boolean-query%E5%B8%83%E5%B0%94%E6%9F%A5%E8%AF%A2)
+      - [response](#response)
+    - [SQL Search API](#sql-search-api)
+      - [SQL CLI](#sql-cli)
+  - [集群、节点、分片及副本](#%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E5%88%86%E7%89%87%E5%8F%8A%E5%89%AF%E6%9C%AC)
+  - [倒排索引](#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ElasticSearch学习笔记
 
 > Elasticsearch 是一个分布式的开源搜索和分析引擎，适用于所有类型的数据，包括文本、数字、地理空间、结构化和非结构化数据。Elasticsearch 在 Apache Lucene 的基础上开发而成，由

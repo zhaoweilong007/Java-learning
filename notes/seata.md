@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [分布式事务Seata](#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1seata)
+  - [分布式事务基本概念](#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+    - [CAP理论](#cap%E7%90%86%E8%AE%BA)
+    - [BASE理论](#base%E7%90%86%E8%AE%BA)
+    - [2PC（二阶段提交）](#2pc%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4)
+    - [3PC（三阶段提交）](#3pc%E4%B8%89%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4)
+    - [TCC（补偿性事务）](#tcc%E8%A1%A5%E5%81%BF%E6%80%A7%E4%BA%8B%E5%8A%A1)
+    - [消息事务](#%E6%B6%88%E6%81%AF%E4%BA%8B%E5%8A%A1)
+    - [Seata事务](#seata%E4%BA%8B%E5%8A%A1)
+      - [三种角色](#%E4%B8%89%E7%A7%8D%E8%A7%92%E8%89%B2)
+      - [AT模式](#at%E6%A8%A1%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 分布式事务Seata
 
 > 对应项目 [springboot-matrix](https://github.com/zhaoweilong007/spring-boot-matrix) 下`seata-dubbo-interface`、`seata-order-service`、`seata-storage-service`、`seata-account-service`

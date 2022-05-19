@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Redis笔记](#redis%E7%AC%94%E8%AE%B0)
+  - [redis数据类型和数据结构](#redis%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)
+  - [rediso常见问题](#rediso%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+    - [缓存穿透](#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F)
+    - [缓存雪崩](#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9)
+    - [redis双写一致性](#redis%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7)
+    - [redis内存淘汰策略](#redis%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5)
+    - [redis持久化机制](#redis%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6)
+    - [redis事务](#redis%E4%BA%8B%E5%8A%A1)
+  - [redis部署](#redis%E9%83%A8%E7%BD%B2)
+    - [主从模式](#%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F)
+    - [哨兵模式](#%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Redis笔记
 
 > redis是key-value的内存数据库，常用作缓存、分布式锁、消息队列，支持事务、持久化、lua脚本、多种集群方案

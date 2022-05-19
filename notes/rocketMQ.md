@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [消息队列](#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97)
+    - [什么是消息队列？使用场景？](#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 消息队列
 
 #### 什么是消息队列？使用场景？

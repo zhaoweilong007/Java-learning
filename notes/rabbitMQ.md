@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [RabbitMq](#rabbitmq)
+  - [概念](#%E6%A6%82%E5%BF%B5)
+    - [channel](#channel)
+    - [exchange](#exchange)
+  - [工作模式](#%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F)
+    - [简单模式(simple)](#%E7%AE%80%E5%8D%95%E6%A8%A1%E5%BC%8Fsimple)
+    - [工作队列(work queue)](#%E5%B7%A5%E4%BD%9C%E9%98%9F%E5%88%97work-queue)
+    - [发布订阅（publish/subscribe）](#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85publishsubscribe)
+    - [路由模式（routeing）](#%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8Frouteing)
+    - [主题模式（topics）](#%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%BC%8Ftopics)
+    - [RPC模式](#rpc%E6%A8%A1%E5%BC%8F)
+  - [消息确认](#%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4)
+  - [配置](#%E9%85%8D%E7%BD%AE)
+  - [实践](#%E5%AE%9E%E8%B7%B5)
+    - [部署](#%E9%83%A8%E7%BD%B2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # RabbitMq
 
 ## 概念
