@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [grpc入门实践](#grpc%E5%85%A5%E9%97%A8%E5%AE%9E%E8%B7%B5)
+  - [grpc介绍](#grpc%E4%BB%8B%E7%BB%8D)
+  - [protoBuffer](#protobuffer)
+    - [安装protoBuffer工具](#%E5%AE%89%E8%A3%85protobuffer%E5%B7%A5%E5%85%B7)
+    - [protoBuffer数据格式](#protobuffer%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F)
+    - [字段编码](#%E5%AD%97%E6%AE%B5%E7%BC%96%E7%A0%81)
+    - [保留字段](#%E4%BF%9D%E7%95%99%E5%AD%97%E6%AE%B5)
+    - [枚举](#%E6%9E%9A%E4%B8%BE)
+    - [JSON Mapping](#json-mapping)
+    - [嵌套](#%E5%B5%8C%E5%A5%97)
+    - [扩展](#%E6%89%A9%E5%B1%95)
+    - [option](#option)
+    - [定义Services](#%E5%AE%9A%E4%B9%89services)
+      - [一元rpc](#%E4%B8%80%E5%85%83rpc)
+      - [服务端流式rpc](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B5%81%E5%BC%8Frpc)
+      - [客户端流式rpc](#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%81%E5%BC%8Frpc)
+      - [双向流式rpc](#%E5%8F%8C%E5%90%91%E6%B5%81%E5%BC%8Frpc)
+  - [整合springboot](#%E6%95%B4%E5%90%88springboot)
+    - [grpc-interface](#grpc-interface)
+    - [grpc-server](#grpc-server)
+    - [grpc-client](#grpc-client)
+  - [相关资料](#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # grpc入门实践
 
 ![](../images/grpc.png)
