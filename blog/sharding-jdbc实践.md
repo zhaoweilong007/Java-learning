@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Sharding-JDBC实践](#sharding-jdbc%E5%AE%9E%E8%B7%B5)
+  - [相关概念](#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5)
+    - [分库分表](#%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8)
+    - [数据分片](#%E6%95%B0%E6%8D%AE%E5%88%86%E7%89%87)
+      - [逻辑表](#%E9%80%BB%E8%BE%91%E8%A1%A8)
+      - [绑定表](#%E7%BB%91%E5%AE%9A%E8%A1%A8)
+      - [广播表](#%E5%B9%BF%E6%92%AD%E8%A1%A8)
+      - [数据节点](#%E6%95%B0%E6%8D%AE%E8%8A%82%E7%82%B9)
+      - [分片键](#%E5%88%86%E7%89%87%E9%94%AE)
+      - [分片算法](#%E5%88%86%E7%89%87%E7%AE%97%E6%B3%95)
+      - [分片策略](#%E5%88%86%E7%89%87%E7%AD%96%E7%95%A5)
+  - [项目演示](#%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA)
+    - [搭建项目](#%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE)
+      - [sharding-jdbc配置](#sharding-jdbc%E9%85%8D%E7%BD%AE)
+        - [mode](#mode)
+      - [props](#props)
+        - [dataSource](#datasource)
+        - [rule分片规则配置](#rule%E5%88%86%E7%89%87%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE)
+      - [测试分库分表](#%E6%B5%8B%E8%AF%95%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8)
+      - [SQL支持程度](#sql%E6%94%AF%E6%8C%81%E7%A8%8B%E5%BA%A6)
+      - [支持的配置中心/注册中心](#%E6%94%AF%E6%8C%81%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83)
+      - [支持的事务](#%E6%94%AF%E6%8C%81%E7%9A%84%E4%BA%8B%E5%8A%A1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Sharding-JDBC实践
 
 ## 相关概念
