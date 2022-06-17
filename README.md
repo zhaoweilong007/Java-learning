@@ -40,6 +40,7 @@
 - [docker+jenkins+jib实现CI/CD](/blog/Jenkins实现自动化部署.md)
 - [docker+ELK收集springboot日志](/blog/elk实践.md)
 - [grpc入门实践](/blog/grpc入门实践.md)
+- [sharding-jdbc实践.md](/blog/sharding-jdbc实践.md)
 
 ## 工具
 
