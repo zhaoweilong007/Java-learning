@@ -30,6 +30,7 @@
     * [docker+ELK收集springboot日志](/blog/elk实践.md)
     * [grpc入门实践](/blog/grpc入门实践.md)
     * [sharding-jdbc实践.md](/blog/sharding-jdbc实践.md)
+    * [xxl-job实践.md](/blog/xxl-job实践.md)
 
 * 工具
     * [window下的linux子系统](/tool/window下的linux子系统.md)
