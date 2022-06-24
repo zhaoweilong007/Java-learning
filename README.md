@@ -42,6 +42,7 @@
 - [grpc入门实践](/blog/grpc入门实践.md)
 - [sharding-jdbc实践.md](/blog/sharding-jdbc实践.md)
 - [xxl-job实践.md](/blog/xxl-job实践.md)
+- [spring batch实践.md](blog/spring%20bacth%E5%AE%9E%E8%B7%B5.md)
 
 ## 工具
 
