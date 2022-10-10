@@ -14,7 +14,6 @@
 ## 笔记
 
 - [java知识点总结](notes/java知识点总结.md)
-- [Java常见面试题](notes/java常见面试题.md)
 - [mysql笔记](/notes/mysql.md)
 - [redis笔记](/notes/redis.md)
 - [elasticSearch笔记](notes/elasticSearch学习笔记.md)
