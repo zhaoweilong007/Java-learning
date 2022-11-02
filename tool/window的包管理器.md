@@ -3,12 +3,12 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Window的包管理器](#window%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8)
-  - [安装scoop](#%E5%AE%89%E8%A3%85scoop)
-  - [使用ari2多线程下载](#%E4%BD%BF%E7%94%A8ari2%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD)
-  - [添加储存库](#%E6%B7%BB%E5%8A%A0%E5%82%A8%E5%AD%98%E5%BA%93)
-  - [安装多jdk](#%E5%AE%89%E8%A3%85%E5%A4%9Ajdk)
-  - [其他命令](#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4)
-  - [按章MySQL](#%E6%8C%89%E7%AB%A0mysql)
+    - [安装scoop](#%E5%AE%89%E8%A3%85scoop)
+    - [使用ari2多线程下载](#%E4%BD%BF%E7%94%A8ari2%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD)
+    - [添加储存库](#%E6%B7%BB%E5%8A%A0%E5%82%A8%E5%AD%98%E5%BA%93)
+    - [安装多jdk](#%E5%AE%89%E8%A3%85%E5%A4%9Ajdk)
+    - [其他命令](#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4)
+    - [按章MySQL](#%E6%8C%89%E7%AB%A0mysql)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -161,3 +161,34 @@ flush priviliges;
 
 查看mysql所有命令
 ![](../images/mysql1.png)
+
+
+## 整理
+
+- scoop bucket常用
+
+Name     Source                   
+
+----     ------                       
+
+dorado   https://github.com/h404bi/dorado     
+
+extras   https://github.com/ScoopInstaller/Extras   
+
+java     https://github.com/ScoopInstaller/Java     
+
+main     https://github.com/ScoopInstaller/Main     
+
+nirsoft  https://github.com/kodybrown/scoop-nirsoft 
+
+versions https://github.com/ScoopInstaller/Versions 
+
+**更新仓库查看官方**<https://rasa.github.io/scoop-directory/by-stars.html>
+
+- scoop 常用软件整理
+
+7zip git mysql redis mongodb another-redis-desktop-manager aria2 arthas fiddler graalvm-jdk11 graalvm20-jdk8 
+gradle insomnia marktext maven mvndaemon nodejs python tabby sudo tcping vscode telegram 
+googlechrome clash-for-windows windows-terminal utools wechat screentogif
+
+以上是常用的，当然还有IDE没有列出来，大家可自行下载
