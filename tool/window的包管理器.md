@@ -162,33 +162,36 @@ flush priviliges;
 查看mysql所有命令
 ![](../images/mysql1.png)
 
-
 ## 整理
 
 - scoop bucket常用
 
-Name     Source                   
-
-----     ------                       
-
-dorado   https://github.com/h404bi/dorado     
-
-extras   https://github.com/ScoopInstaller/Extras   
-
-java     https://github.com/ScoopInstaller/Java     
-
-main     https://github.com/ScoopInstaller/Main     
-
-nirsoft  https://github.com/kodybrown/scoop-nirsoft 
-
-versions https://github.com/ScoopInstaller/Versions 
+| Name        | Source                                        | Updated            | Manifests |
+|-------------|-----------------------------------------------|--------------------|-----------|
+| dev-tools   | https://github.com/anderlli0053/DEV-tools     | 2022/11/3 4:42:16  | 10694     |
+| scoopMain   | https://github.com/wang-song/scoopMain        | 2022/9/28 15:23:02 | 3901      |
+| lemon       | https://jihulab.com/hoilc/scoop-lemon         | 2022/11/3 5:22:03  | 636       |
+| main        | https://github.com/ScoopInstaller/Main        | 2022/11/3 8:35:29  | 1108      |
+| dorado      | https://github.com/h404bi/dorado              | 2022/11/3 8:29:07  | 222       |
+| extras      | https://github.com/ScoopInstaller/Extras      | 2022/11/3 8:35:33  | 1722      |
+| games       | https://github.com/Calinou/scoop-games        | 2022/11/3 8:35:10  | 244       |
+| java        | https://github.com/ScoopInstaller/Java        | 2022/11/2 20:42:49 | 245       |
+| JetBrains   | https://github.com/Ash258/Scoop-JetBrains     | 2022/11/3 3:07:38  | 100       |
+| nirsoft     | https://github.com/kodybrown/scoop-nirsoft    | 2022/6/22 0:00:55  | 271       |
+| nonportable | https://github.com/ScoopInstaller/Nonportable | 2022/11/3 1:02:48  | 104       |
+| raresoft    | https://github.com/L-Trump/scoop-raresoft     | 2020/9/1 17:57:23  | 87        |
+| scoop       | https://github.com/dodorz/scoop               | 2022/11/3 3:42:27  | 0         |
+| scoopet     | https://github.com/ivaquero/scoopet           | 2022/11/2 21:22:36 | 49        |
+| versions    | https://github.com/ScoopInstaller/Versions    | 2022/11/3 4:36:39  | 387       |
 
 **更新仓库查看官方**<https://rasa.github.io/scoop-directory/by-stars.html>
 
 - scoop 常用软件整理
 
-7zip git mysql redis mongodb another-redis-desktop-manager aria2 arthas fiddler graalvm-jdk11 graalvm20-jdk8 
-gradle insomnia marktext maven mvndaemon nodejs python tabby sudo tcping vscode telegram 
-googlechrome clash-for-windows windows-terminal utools wechat screentogif
-
-以上是常用的，当然还有IDE没有列出来，大家可自行下载
+```shell
+scoop install clash-for-windows scoop-completion 7zip git mysql redis mongodb another-redis-desktop-manager aria2 arthas fiddler 
+graalvm-jdk11 graalvm20-jdk8 
+gradle insomnia marktext maven mvndaemon nodejs python tabby sudo tcping telegram 
+googlechrome windows-terminal utools wechat screentogif fluent-terminal-np docker lx-music 
+IntelliJ-IDEA-Ultimate DataGrip vscode 
+```
