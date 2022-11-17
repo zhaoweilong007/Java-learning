@@ -1,6 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [基础](#%E5%9F%BA%E7%A1%80)
     - [重载和重写的区别？](#%E9%87%8D%E8%BD%BD%E5%92%8C%E9%87%8D%E5%86%99%E7%9A%84%E5%8C%BA%E5%88%AB)
@@ -35,6 +35,7 @@
     - [创建线程的几种方式](#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F)
     - [线程间如何通信？](#%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1)
     - [sleep、wait、yield、join方法的区别？](#sleepwaityieldjoin%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB)
+    - [thread的interrupt()、interrupted()、isInterrupted()方法区别](#thread%E7%9A%84interruptinterruptedisinterrupted%E6%96%B9%E6%B3%95%E5%8C%BA%E5%88%AB)
     - [创建线程池的几种方式？](#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F)
     - [ThreadPoolExecutor](#threadpoolexecutor)
     - [synchronized和lock的区别？](#synchronized%E5%92%8Clock%E7%9A%84%E5%8C%BA%E5%88%AB)
@@ -46,8 +47,8 @@
     - [Semaphore（信号量）](#semaphore%E4%BF%A1%E5%8F%B7%E9%87%8F)
     - [CyclicBarrier（循环栅栏）](#cyclicbarrier%E5%BE%AA%E7%8E%AF%E6%A0%85%E6%A0%8F)
     - [介绍下ThreadLocal及应用场景？](#%E4%BB%8B%E7%BB%8D%E4%B8%8Bthreadlocal%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF)
-    - [JMM（java内存模型）](#jmmjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B)
 - [JVM](#jvm)
+    - [JMM（java内存模型）](#jmmjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B)
     - [JVM](#jvm-1)
     - [JVM垃圾回收](#jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6)
 - [网络编程](#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B)
