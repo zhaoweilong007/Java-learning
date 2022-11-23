@@ -3,17 +3,17 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [MySQL](#mysql)
-  - [MySQL架构](#mysql%E6%9E%B6%E6%9E%84)
-    - [mysql查询和更新执行流程](#mysql%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
-  - [MySQL索引](#mysql%E7%B4%A2%E5%BC%95)
-  - [MySQL隔离级别](#mysql%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB)
-  - [redo log、bin log、undo log](#redo-logbin-logundo-log)
-    - [redo log（重做日志）](#redo-log%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97)
-    - [bin log（归档日志）](#bin-log%E5%BD%92%E6%A1%A3%E6%97%A5%E5%BF%97)
-    - [undo log（回滚日志）](#undo-log%E5%9B%9E%E6%BB%9A%E6%97%A5%E5%BF%97)
-  - [MVCC](#mvcc)
-    - [一致性非锁定读](#%E4%B8%80%E8%87%B4%E6%80%A7%E9%9D%9E%E9%94%81%E5%AE%9A%E8%AF%BB)
-    - [锁定读](#%E9%94%81%E5%AE%9A%E8%AF%BB)
+    - [MySQL架构](#mysql%E6%9E%B6%E6%9E%84)
+        - [mysql查询和更新执行流程](#mysql%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
+    - [MySQL索引](#mysql%E7%B4%A2%E5%BC%95)
+    - [MySQL隔离级别](#mysql%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB)
+    - [redo log、bin log、undo log](#redo-logbin-logundo-log)
+        - [redo log（重做日志）](#redo-log%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97)
+        - [bin log（归档日志）](#bin-log%E5%BD%92%E6%A1%A3%E6%97%A5%E5%BF%97)
+        - [undo log（回滚日志）](#undo-log%E5%9B%9E%E6%BB%9A%E6%97%A5%E5%BF%97)
+    - [MVCC](#mvcc)
+        - [一致性非锁定读](#%E4%B8%80%E8%87%B4%E6%80%A7%E9%9D%9E%E9%94%81%E5%AE%9A%E8%AF%BB)
+        - [锁定读](#%E9%94%81%E5%AE%9A%E8%AF%BB)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -69,7 +69,8 @@ mysql主要分为
 
 - BTree
 
-Innodb的索引采用B+树的数据结构，所有数据存放在叶子节点，非叶子节点不存储任何数据，每个相邻的叶子节点增加链表指针，提高区间访问效率，这种索引也叫**聚簇索引**
+Innodb的索引采用B+树的数据结构，所有数据存放在叶子节点，非叶子节点不存储任何数据，每个相邻的叶子节点增加链表指针，提高区间访问效率，这种索引也叫
+**聚簇索引**
 
 **覆盖索引**
 
@@ -202,11 +203,51 @@ mysql通过sync_binlog控制刷盘bin log的刷盘时机，取值范围是0-n
 
 当执行insert时，会记录delete语句，执行update时，记录相反的update语句
 
+## 锁
+
+innodb实现了以下两种类型的行锁:
+
+- 共享锁（S）允许事务读一行，阻止其他事务获取排他锁
+- 排他锁（X）允许获得排他锁的事务更新数据，阻止其他事务获取共享锁和排他锁
+
+为了允许行锁和表锁共存，innodb还有两种意向锁，这两种意向锁都是表锁
+
+- 意向共享锁（IS） 事务打断给数据加共享锁，必须获得意向IS锁
+- 意向排他锁（IX） 事务打算给数据加排他锁，必须获得该表的IX锁
+
+InnoDB加锁方法：
+
+- 对于 UPDATE、 DELETE 和 INSERT 语句， InnoDB 会自动给涉及数据集加排他锁（X)
+- 对于普通 SELECT 语句，InnoDB 不会加任何锁
+- 通过select...from update显式排加他锁或select...lock in share mode显式加共享锁
+
+`select *** for update` 的使用场景：为了让自己查到的数据确保是最新数据，并且查到后的数据只允许自己来修改的时候，需要用到
+for update 子句
+
+`select *** lock in share mode` 使用场景：为了确保自己查到的数据没有被其他的事务正在修改，也就是说确保查到的数据是最新的数据，并且不允许其他人来修改数据
+
+**关于使用for update是锁表还是锁行:**
+
+- 是否使用了索引/主键，没用索引/主键的话就是表锁，否则就是是行锁
+
+锁的实现算法：
+
+- 记录锁（record lock） 对记录数据加锁
+- 间隙锁（gap lock） 根据范围条件加锁
+- 临姐锁（next key lock） record lock+gap lock的实现方式
+
+
+
 ## MVCC
 
 ### 一致性非锁定读
 
-一致性非锁定读通过版本号机制实现，通过增加一个版本号或时间戳，更新时将版本号+1或更新时间戳，查询时，将当前可见的版本号与记录的版本号对比，记录的版本号小于可见版本号，则代表记录可见
+一致性非锁定读通过版本号机制实现，通过增加一个版本号或时间戳，更新时将版本号+1或更新时间戳，查询时，将当前可见的版本号与记录的版本号对比，
+记录的版本号小于可见版本号，则代表记录可见
 
 ### 锁定读
 
+**innodb在可重复度的情况下可以解决幻读，但是有以下条件：**
+
+- 执行普通的select，此时以mvcc的快照读方式读取数据
+- 执行 select...for update/lock in share mode、insert、update、delete 等当前读
