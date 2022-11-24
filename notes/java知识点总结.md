@@ -96,14 +96,6 @@
     - [mybatis的执行过程？](#mybatis%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B)
     - [#{}和${}的区别？](#%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB)
     - [mybatis的一级缓存和二级缓存？](#mybatis%E7%9A%84%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98)
-- [Redis](#redis)
-    - [redis作用及使用场景？](#redis%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF)
-    - [Redis为什么这么快？Redis采用多线程有哪些问题？](#redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%ABredis%E9%87%87%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%89%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98)
-    - [redis的有哪几种数据类型?数据结构?](#redis%E7%9A%84%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)
-    - [什么是缓存击穿、缓存穿透、缓存雪崩？对应有哪些解决方法？](#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E5%AF%B9%E5%BA%94%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95)
-    - [Redis持久化策略？](#redis%E6%8C%81%E4%B9%85%E5%8C%96%E7%AD%96%E7%95%A5)
-    - [Redis过期策略？](#redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5)
-    - [Redis宕机怎么恢复？](#redis%E5%AE%95%E6%9C%BA%E6%80%8E%E4%B9%88%E6%81%A2%E5%A4%8D)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -947,43 +939,3 @@ ${} 是变量占位符，属于静态文本替换，存在sql注入的风险
 
 - 一级缓存 sqlSession级别的缓存，每个sqlsession之间的缓存互相不能读取
 - 二级缓存 二级缓存是mapper级别的缓存，多个sqlsession去操作同一个mapper的sql语句，多个sqlSession可以共用二级缓存，可以在mybatis的配置文件中开启二级缓存
-
-## Redis
-
-#### redis作用及使用场景？
-
-Redis是一款高性能的Key-value数据库，一般用于缓存服务器
-
-#### Redis为什么这么快？Redis采用多线程有哪些问题？
-
-- 是内存操作
-- 采用IO多路复用技术
-- 数据结构简单，key-value类型，无关联关系
-
-#### redis的有哪几种数据类型?数据结构?
-
-- String、List、Hash、set、zset
-
-#### 什么是缓存击穿、缓存穿透、缓存雪崩？对应有哪些解决方法？
-
-- 缓存穿透 缓存穿透是指定一直访问一个数据库不存在的key，导致每次查询都要访问数据库，造成数据库的压力很大
-
-解决办法：查询返回不存在数据的key也作为缓存，设置过期时间，或者使用布隆过滤器，过滤器中不存在的数据一定不存在，存在的数据有可能不存在
-
-- 缓存击穿 一个key失效时，突然有大量的请求访问，造成数据库突然的压力增加 解决办法： 对key分为冷、热key，热点key可以设置永不过期，冷key可以设置随机时间
-- 缓存雪崩 大量的key在同一段时间失效，也会造成数据的压力
-
-#### Redis持久化策略？
-
-- RDB 将某个时间点的所有数据都存放在硬盘上，可以将快照复制到其他服务器 缺点是:
-  1、 如果服务器故障，会丢失最后一次创建快照之后的数据 2、如果数据量很大，保存的快照的时间会很长
-- AOF 将写命令添加到AOF文件的末尾，将写命令存储到缓存区，再根据一定时间将缓存区写入到磁盘 有三个同步选项 always：每次写命令都要同步一次，降低服务器的性能
-  everysec：每秒同步一次，一般这个比较合适，保证失败崩溃只丢失一秒的左右的数据 on：重写机制，去重AOF文件中冗余的命令
-
-#### Redis过期策略？
-
-volatile-lru：从已设置过期时间的数据中挑选最近最少使用的数据淘汰 volatile-ttl：从已设置过期时间的数据中挑选将要过期的数据淘汰
-volatile-random：从已设置过期时间的数据中任意淘汰数据 allkeys-lru：所有中最少使用的key淘汰 allkeys-random：所有数据中任意淘汰
-noevication：禁止驱逐数据
-
-#### Redis宕机怎么恢复？
